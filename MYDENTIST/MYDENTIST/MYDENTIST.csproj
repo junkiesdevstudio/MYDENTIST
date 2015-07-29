@@ -66,6 +66,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Class\cds_BaseKonektor.cs" />
     <Compile Include="Class\cds_Karyawan.cs" />
     <Compile Include="Class\cds_MYSQLKonektor.cs" />
   </ItemGroup>
