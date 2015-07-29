@@ -17,13 +17,13 @@
                 <DataGridTextColumn Header="Alamat" Binding="{Binding AlamatKaryawan}"  Width="250" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Telp." Binding="{Binding Telp}"  Width="150" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Tanggal Masuk" Binding="{Binding Tanggal_Masuk}"  Width="150" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="340" IsReadOnly="True"/>
-                <DataGridTemplateColumn Header="Aksi" Width="100">
+                <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="300" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Aksi" Width="140">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Edit" ToolTip="{Binding ButtonsList.ToolTip}" Width="50"/>
-                                <Button Content="Hapus" ToolTip="{Binding ButtonsList.ToolTip}" Width="50"/>
+                                <Button Style="{StaticResource ResourceKey=BaseButtonStyle}" Content="Edit" ToolTip="{Binding ButtonsList.ToolTip}" Width="70"/>
+                                <Button Style="{StaticResource ResourceKey=BaseButtonStyle}" Content="Hapus" ToolTip="{Binding ButtonsList.ToolTip}" Width="70"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -38,6 +38,7 @@
             </DataGrid.RowDetailsTemplate>
             -->
         </DataGrid>
+        <Button Content="Tambah Karyawan" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="108" Height="33"/>
 
 
 
