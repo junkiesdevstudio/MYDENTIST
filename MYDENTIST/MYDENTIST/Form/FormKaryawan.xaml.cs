@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MYDENTIST.Class;
+using MYDENTIST.Class.DatabaseHelper;
+using MYDENTIST.Form.PopUp;
+using System.Data;
 
 namespace MYDENTIST.Form
 {
@@ -21,13 +24,58 @@ namespace MYDENTIST.Form
     /// </summary>
     public partial class FormKaryawan : UserControl
     {
+
+        private cds_MYSQLKonektor koneksi;
+        private ParameterData param;
         public FormKaryawan()
         {
             InitializeComponent();
-            List<cds_Karyawan> users = new List<cds_Karyawan>();
-            users.Add(new cds_Karyawan() { IdKaryawan = 0, NamaKaryawan = "Sammy Doe", JenisKaryawan = "Dokter", AlamatKaryawan = "Sorowajan" });
-            users.Add(new cds_Karyawan() { IdKaryawan = 0, NamaKaryawan = "Sammy Doe", JenisKaryawan = "Dokter", AlamatKaryawan = "Sorowajan" });
-            dgUsers.ItemsSource = users;
+
+            ShowDataTabel();
+        }
+
+        private void btn_tambah_Click(object sender, RoutedEventArgs e)
+        {
+            PopUpKaryawan popKaryawan = new PopUpKaryawan();
+            popKaryawan.AddItemCallback = new AddItemDelegate(this.AddItemCallbackPopUpKaeyawan);
+            popKaryawan.ShowDialog();
+
+           
+        }
+
+        private void AddItemCallbackPopUpKaeyawan()
+        {
+            ShowDataTabel();
+        }
+
+        void ShowDataTabel()
+        {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
+            dgUsers.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_karyawan", null).DefaultView;
+            
+            ((DataGridTextColumn)dgUsers.Columns[0]).Binding = new Binding("id_karyawan");
+            //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[2]).Binding = new Binding("nama_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[3]).Binding = new Binding("jenis_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[4]).Binding = new Binding("alamat_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[5]).Binding = new Binding("telp_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[6]).Binding = new Binding("tglmasuk_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[7]).Binding = new Binding("keterangan_karyawan");
+            
+            koneksi.Dispose();
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (FrameworkElement)sender;
+            var row = (DataGridRow)button.Tag;
+
+            if (dgUsers.SelectedCells.Count > 0)
+            {
+                DataRowView v = (DataRowView)dgUsers.Items[row.GetIndex()];
+                string idKaryawan = (string)v[0].ToString();
+                
+            }
         }
     }
 }
