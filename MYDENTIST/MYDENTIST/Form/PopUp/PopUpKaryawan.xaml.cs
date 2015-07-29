@@ -23,6 +23,11 @@ namespace MYDENTIST.Form.PopUp
     /// 
     public delegate void AddItemDelegate();
 
+
+    //Untuk Form yang berdiri sendiri alia tidak menempel (PopUp) di MainForm, menggunakan Base class WINDOW (FormKaryawan.xaml) --> Add -> Window
+    //Untuk Form yang menempel di MainForm, menggunakan Base class USERCONTROL (PopUpKaryawan.xaml)-> Add -> UserControl
+    //Dikarenakan WPF tidak support / tidak digunakan untuk model MDIChild, MDIParrent seperti Winform
+
     public partial class PopUpKaryawan : Window
     {
         public AddItemDelegate AddItemCallback;
@@ -34,16 +39,22 @@ namespace MYDENTIST.Form.PopUp
         {
             InitializeComponent();
 
+            //@Bahar : Format Tanggal (id-ID)
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
             Thread.CurrentThread.CurrentCulture = ci;
 
+            //@Bahar : Jenis ini static, jadi gk tak simpen di database
             cmbJenis.Items.Add("Dokter");
             cmbJenis.Items.Add("Perawat");
+
             datePick.SelectedDate = DateTime.Today; 
+
+            //@Bahar : Melakukan Koneksi
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
         }
 
+        //@Bahar : Rasah tak jelake nek iki...ahahahhaa
         private void btnBatal_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -54,6 +65,8 @@ namespace MYDENTIST.Form.PopUp
 
             try
             {
+
+                //@Bahar : ParameterData dalam bentuk Array (Menyesuakian Database)
                 param = new ParameterData[] { new ParameterData("nama_karyawan", txtNama.Text),
                                           new ParameterData("jenis_karyawan", cmbJenis.SelectedItem),
                                           new ParameterData("alamat_karyawan", txtAlamat.Text),
@@ -62,11 +75,17 @@ namespace MYDENTIST.Form.PopUp
                                           new ParameterData("keterangan_karyawan", txtKeterangan.Text)};
 
                 koneksi.InsertRow("mydentist", "tbl_karyawan", true, param);
+
+                //@Bahar : Penting ketika melakukan fungsi InsertRow, kalau tidak dicommit data gk akan masuk ke database
                 koneksi.Commit(true);
 
+                //@Bahar : melaksanakan fungsi delegate
                 AddItemCallback();
 
                 MessageBox.Show("Data karyawan berhasil ditambah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                //@Bahar : Penting, habis melakukan koneksi harus ditutup koneksi.Dispose() !!
+                //Jika tidak ditutup akan bertabrakan dengan koneksi lain yang aktif, alhasil Not Respond
                 koneksi.Dispose();
             }
             catch (Exception ex)

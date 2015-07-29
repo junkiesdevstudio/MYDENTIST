@@ -34,20 +34,28 @@ namespace MYDENTIST.Form
             ShowDataTabel();
         }
 
+
+        //@bahar : Nek iki rasah tak jelaske...ahahahaha
         private void btn_tambah_Click(object sender, RoutedEventArgs e)
         {
             PopUpKaryawan popKaryawan = new PopUpKaryawan();
-            popKaryawan.AddItemCallback = new AddItemDelegate(this.AddItemCallbackPopUpKaeyawan);
+            popKaryawan.AddItemCallback = new AddItemDelegate(this.AddItemCallbackPopUpKaryawan);
             popKaryawan.ShowDialog();
 
            
         }
 
-        private void AddItemCallbackPopUpKaeyawan()
+
+        //@Bahar : Fungsi Delegate Callback dari PopUPKaryawan
+        //- Ketika Tombol simpan di PopUpKaryawan di clik, maka secara otomatis akan memanggil
+        //  fungsi ini tanpa harus mengload baru FormKaryawan agar nilai pada FormKaryawan tidak berubah
+        private void AddItemCallbackPopUpKaryawan()
         {
             ShowDataTabel();
         }
 
+
+        //@Bahar : Manual binding data dari database ke kolom DataGrid
         void ShowDataTabel()
         {
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
@@ -62,9 +70,12 @@ namespace MYDENTIST.Form
             ((DataGridTextColumn)dgUsers.Columns[6]).Binding = new Binding("tglmasuk_karyawan");
             ((DataGridTextColumn)dgUsers.Columns[7]).Binding = new Binding("keterangan_karyawan");
             
+
+            //@Bahar : Harus ditutup !!!
             koneksi.Dispose();
         }
 
+        //@Bahar : Binding dinamik Click EditButton yang digenerate melalui DataGridTemplate
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             var button = (FrameworkElement)sender;
@@ -72,10 +83,16 @@ namespace MYDENTIST.Form
 
             if (dgUsers.SelectedCells.Count > 0)
             {
-                DataRowView v = (DataRowView)dgUsers.Items[row.GetIndex()];
-                string idKaryawan = (string)v[0].ToString();
-                
+                MessageBox.Show(GetIndexKaryawan(row));
             }
+        }
+
+
+        //@Bahar : Ambil ID Karyawan dari DataGrid yang diselect
+        private string GetIndexKaryawan(DataGridRow row)
+        {
+            DataRowView v = (DataRowView)dgUsers.Items[row.GetIndex()];
+            return (string)v[0].ToString();
         }
     }
 }
