@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MYDENTIST.Form;
 
 namespace MYDENTIST
 {
@@ -22,6 +23,12 @@ namespace MYDENTIST
         public FormMain()
         {
             InitializeComponent();
+        }
+
+        private void btnKaryawan_Click(object sender, RoutedEventArgs e)
+        {
+            FormKaryawan inputGrid = new FormKaryawan();
+            UIPanel.Children.Add(inputGrid);
         }
     }
 }

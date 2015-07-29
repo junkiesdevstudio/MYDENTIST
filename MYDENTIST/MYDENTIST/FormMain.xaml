@@ -19,7 +19,7 @@
             <RibbonTab x:Name="TABDATA" Header="DATA" KeyTip="H" >
                 <!-- Home  group-->
                 <RibbonGroup x:Name="DATA" Header="DATA">
-                    <RibbonButton x:Name="btnKaryawan" LargeImageSource="Image/icon/icon_karyawan.png" Label="KARYAWAN" KeyTip="C" Width="65" />
+                    <RibbonButton x:Name="btnKaryawan" LargeImageSource="Image/icon/icon_karyawan.png" Label="KARYAWAN" KeyTip="C" Width="65" Click="btnKaryawan_Click" />
                     <Border Width="1" Margin="3" Height="175" Visibility="Visible" Background="#FFB9C9DA" />
                     <RibbonButton LargeImageSource="Image/icon/icon_pasien.png" Label="PASIEN" KeyTip="C" Width="65" />
                     <Border Width="1" Margin="3" Height="175" Visibility="Visible" Background="#FFB9C9DA" />

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MYDENTIST.Class;
 
 namespace MYDENTIST.Form
 {
@@ -23,6 +24,9 @@ namespace MYDENTIST.Form
         public FormKaryawan()
         {
             InitializeComponent();
+            List<cds_Karyawan> users = new List<cds_Karyawan>();
+            users.Add(new cds_Karyawan() { IdKaryawan = 0, NamaKaryawan = "Sammy Doe", JenisKaryawan = "Dokter", AlamatKaryawan = "Sorowajan" });
+            dgUsers.ItemsSource = users;
         }
     }
 }

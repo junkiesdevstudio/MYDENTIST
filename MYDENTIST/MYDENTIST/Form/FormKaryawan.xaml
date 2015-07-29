@@ -9,7 +9,7 @@
         <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
         <TextBox Style="{StaticResource ResourceKey=flatTextBox}" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="10,38,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" >
+        <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="10,38,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="No" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" />
                 <DataGridTextColumn Header="Nama" Binding="{Binding NamaKaryawan}"  Width="200" IsReadOnly="True" />
@@ -30,11 +30,13 @@
 
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <!--
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Details}" Margin="10" />
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
+            -->
         </DataGrid>
 
 
