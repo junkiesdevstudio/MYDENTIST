@@ -1,0 +1,72 @@
+﻿<Window x:Class="MYDENTIST.FormMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FormMain" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Ribbon x:Name="RibbonWin"  SelectedIndex="0" ShowQuickAccessToolBarOnTop="False">
+
+            <!-- Application Menu, located at the left-hand side (down arrow) -->
+            <Ribbon.ApplicationMenu >
+                <RibbonApplicationMenu KeyTip="F" Visibility="Collapsed">
+
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <!-- Ribbon Tab #1: Home -->
+            <RibbonTab x:Name="TABDATA" Header="DATA" KeyTip="H" >
+                <!-- Home  group-->
+                <RibbonGroup x:Name="DATA" Header="DATA">
+                    <RibbonButton x:Name="btnKaryawan" LargeImageSource="Image/icon/icon_karyawan.png" Label="KARYAWAN" KeyTip="C" Width="65" />
+                    <Border Width="1" Margin="3" Height="175" Visibility="Visible" Background="#FFB9C9DA" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_pasien.png" Label="PASIEN" KeyTip="C" Width="65" />
+                    <Border Width="1" Margin="3" Height="175" Visibility="Visible" Background="#FFB9C9DA" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_terapi.png" Label="TERAPI" KeyTip="C" Width="65" />
+                    <Border Width="1" Margin="3" Height="175" Visibility="Visible" Background="#FFB9C9DA" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_obat.png" Label="OBAT" KeyTip="C" Width="65" />
+                </RibbonGroup>
+                <!-- Employee And Payroll group-->
+
+
+            </RibbonTab>
+
+            <RibbonTab x:Name="TABPRESENSI" Header="PRESENSI" KeyTip="H" >
+                <RibbonGroup x:Name="PRESENSI" Header="PRESENSI">
+                    <RibbonButton LargeImageSource="Image/icon/icon_presensi.png" Label="PRESENSI" KeyTip="C" Width="65" />
+                </RibbonGroup>
+            </RibbonTab>
+            <RibbonTab x:Name="TABAPPOINTMENT" Header="APPOINTMENT" KeyTip="H" >
+                <RibbonGroup x:Name="APPOINTMENT" Header="APPOINTMENT">
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" />
+                </RibbonGroup>
+            </RibbonTab>
+
+            <RibbonTab x:Name="TABTRANSAKSI" Header="TRANSAKSI" KeyTip="H" >
+                <RibbonGroup x:Name="TRANSAKSI" Header="TRANSAKSI">
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" />
+                </RibbonGroup>
+            </RibbonTab>
+            <RibbonTab x:Name="TABREKAP" Header="REKAP" KeyTip="H" >
+                <RibbonGroup x:Name="REKAP" Header="REKAP">
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" />
+                </RibbonGroup>
+            </RibbonTab>
+            <RibbonTab x:Name="TABLAPORAN" Header="LAPORAN" KeyTip="H" >
+                <RibbonGroup x:Name="LAPORAN" Header="LAPORAN">
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" />
+                </RibbonGroup>
+            </RibbonTab>
+            <RibbonTab x:Name="TABREMINDER" Header="REMINDER" KeyTip="H" >
+                <RibbonGroup x:Name="REMINDER" Header="REMINDER">
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" />
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+
+        <DockPanel Name="UIPanel" Grid.Row="1">
+
+        </DockPanel>
+    </Grid>
+</Window>
