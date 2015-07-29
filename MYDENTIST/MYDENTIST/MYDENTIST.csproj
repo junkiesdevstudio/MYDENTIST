@@ -66,11 +66,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Class\cds_BaseKonektor.cs" />
+    <Compile Include="Class\DatabaseHelper\cds_BaseKonektor.cs" />
     <Compile Include="Class\cds_Karyawan.cs" />
-    <Compile Include="Class\cds_MYSQLKonektor.cs" />
+    <Compile Include="Class\DatabaseHelper\cds_KoneksiString.cs" />
+    <Compile Include="Class\DatabaseHelper\cds_MYSQLKonektor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\DatabaseHelper\cds_MYSQLMultiKonektor.cs" />
+    <Compile Include="Class\DatabaseHelper\Misc\AttributeData.cs" />
+    <Compile Include="Class\DatabaseHelper\Misc\ChecksumCheck.cs" />
+    <Compile Include="Class\DatabaseHelper\Misc\Log.cs" />
+    <Compile Include="Class\DatabaseHelper\Misc\Parsing.cs" />
+    <Compile Include="Class\DatabaseHelper\Misc\Status.cs" />
+    <Compile Include="Class\DatabaseHelper\ParameterData.cs" />
     <Compile Include="FormMain.xaml.cs">
       <DependentUpon>FormMain.xaml</DependentUpon>
     </Compile>
