@@ -24,7 +24,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Edit" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnEdit_Click"/>
-                                <Button Content="Hapus" ToolTip="{Binding ButtonsList.ToolTip}" Width="70"/>
+                                <Button Content="Hapus" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnHapus_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -87,6 +87,15 @@ namespace MYDENTIST.Form
             }
         }
 
+        //@Bahar : Binding dinamik Click HapusButton yang digenerate melalui DataGridTemplate
+        private void btnHapus_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (FrameworkElement)sender;
+            var row = (DataGridRow)button.Tag;
+
+            MessageBox.Show("Hapus");
+        }
+
 
         //@Bahar : Ambil ID Karyawan dari DataGrid yang diselect
         private string GetIndexKaryawan(DataGridRow row)
