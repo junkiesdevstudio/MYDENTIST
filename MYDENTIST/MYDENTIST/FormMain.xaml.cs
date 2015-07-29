@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MYDENTIST
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for FormMain.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FormMain : Window
     {
-        public MainWindow()
+        public FormMain()
         {
             InitializeComponent();
         }
