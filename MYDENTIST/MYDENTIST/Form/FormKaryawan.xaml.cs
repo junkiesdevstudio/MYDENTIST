@@ -26,6 +26,7 @@ namespace MYDENTIST.Form
             InitializeComponent();
             List<cds_Karyawan> users = new List<cds_Karyawan>();
             users.Add(new cds_Karyawan() { IdKaryawan = 0, NamaKaryawan = "Sammy Doe", JenisKaryawan = "Dokter", AlamatKaryawan = "Sorowajan" });
+            users.Add(new cds_Karyawan() { IdKaryawan = 0, NamaKaryawan = "Sammy Doe", JenisKaryawan = "Dokter", AlamatKaryawan = "Sorowajan" });
             dgUsers.ItemsSource = users;
         }
     }
