@@ -112,6 +112,9 @@
     <Compile Include="Form\PopUp\PopUpPasien.xaml.cs">
       <DependentUpon>PopUpPasien.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Form\PopUp\PopUpTerapi.xaml.cs">
+      <DependentUpon>PopUpTerapi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -165,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Form\PopUp\PopUpPasien.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\PopUp\PopUpTerapi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

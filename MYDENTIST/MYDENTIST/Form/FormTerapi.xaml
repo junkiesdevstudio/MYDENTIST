@@ -4,8 +4,49 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xml:lang="id-ID"
+             d:DesignHeight="300" HorizontalAlignment="Stretch" d:DesignWidth="710" >
+
+
     <Grid>
-            
+        <Grid.Background>
+            <ImageBrush ImageSource="../image/background.jpg"/>
+        </Grid.Background>
+
+        <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" TextChanged="txtPencarian_TextChanged" />
+
+        <DataGrid Name="dgTerapi" AutoGenerateColumns="False" Margin="10,41,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding IdTerapi}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
+                <DataGridTextColumn Header="No" Binding="{Binding NoTerapi}" Width="50" IsReadOnly="True" />
+                <DataGridTextColumn Header="Nama" Binding="{Binding NamaTerapi}"  Width="250" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Jenis" Binding="{Binding JenisTerapi}"  Width="150" IsReadOnly="True" CanUserResize="True"/>
+                <DataGridTextColumn Header="Biaya" Binding="{Binding BiayaTerapi}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Keterangan" Binding="{Binding KeteranganTerapi}"  Width="600" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Aksi" Width="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Ubah" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnEdit_Click"/>
+                                <Button Content="Hapus" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnHapus_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <!--
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Details}" Margin="10" />
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+            -->
+        </DataGrid>
+        <Button x:Name="btn_tambah" Content="Tambah Terapi" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambah_Click" />
+
+
+
     </Grid>
 </UserControl>

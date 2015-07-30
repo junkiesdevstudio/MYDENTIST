@@ -44,5 +44,12 @@ namespace MYDENTIST
             FormPasien inputGrid = new FormPasien();
             UIPanel.Children.Add(inputGrid);
         }
+
+        private void btnTerapi_Click(object sender, RoutedEventArgs e)
+        {
+            UIPanel.Children.Clear();
+            FormTerapi inputGrid = new FormTerapi();
+            UIPanel.Children.Add(inputGrid);
+        }
     }
 }
