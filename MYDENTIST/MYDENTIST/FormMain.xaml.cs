@@ -31,5 +31,11 @@ namespace MYDENTIST
             FormKaryawan inputGrid = new FormKaryawan();
             UIPanel.Children.Add(inputGrid);
         }
+
+        private void btnObat_Click(object sender, RoutedEventArgs e)
+        {
+            FormObat inputGrid = new FormObat();
+            UIPanel.Children.Add(inputGrid);
+        }
     }
 }
