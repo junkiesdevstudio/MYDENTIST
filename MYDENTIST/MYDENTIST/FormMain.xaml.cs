@@ -25,12 +25,14 @@ namespace MYDENTIST
 
         private void btnKaryawan_Click(object sender, RoutedEventArgs e)
         {
+            UIPanel.Children.Clear();
             FormKaryawan inputGrid = new FormKaryawan();
             UIPanel.Children.Add(inputGrid);
         }
 
         private void btnObat_Click(object sender, RoutedEventArgs e)
         {
+            UIPanel.Children.Clear();
             FormObat inputGrid = new FormObat();
             UIPanel.Children.Add(inputGrid);
         }

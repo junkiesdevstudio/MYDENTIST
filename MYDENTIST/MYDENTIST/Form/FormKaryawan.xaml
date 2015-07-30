@@ -9,7 +9,7 @@
     
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="image/background.jpg"/>
+            <ImageBrush ImageSource="../image/background.jpg"/>
         </Grid.Background>
 
         <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>

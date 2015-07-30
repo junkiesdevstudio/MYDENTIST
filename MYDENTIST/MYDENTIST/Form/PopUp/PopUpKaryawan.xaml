@@ -3,6 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Tambah Karyawan" Height="439.051" Width="498.175" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../../image/background.jpg"/>
+        </Grid.Background>
+
         <TextBox x:Name="txtNama" HorizontalAlignment="Left" Height="23" Margin="84,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377"/>
         <Label Content="Nama" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="69"/>
         <Label Content="Jenis" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="69" RenderTransformOrigin="0.446,3.076"/>
