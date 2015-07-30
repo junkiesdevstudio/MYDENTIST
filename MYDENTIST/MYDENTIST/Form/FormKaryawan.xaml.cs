@@ -39,7 +39,7 @@ namespace MYDENTIST.Form
         private void btn_tambah_Click(object sender, RoutedEventArgs e)
         {
             PopUpKaryawan popKaryawan = new PopUpKaryawan();
-            popKaryawan.AddItemCallback = new AddItemDelegate(this.AddItemCallbackPopUpKaryawan);
+            popKaryawan.AddItemCallback = new AddItemDelegateKaryawan(this.AddItemCallbackPopUpKaryawan);
             popKaryawan.ShowDialog();
 
            
@@ -58,7 +58,7 @@ namespace MYDENTIST.Form
         //@Bahar : Manual binding data dari database ke kolom DataGrid
         void ShowDataTabel()
         {
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             dgUsers.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_karyawan", null).DefaultView;
             
             ((DataGridTextColumn)dgUsers.Columns[0]).Binding = new Binding("id_karyawan");
@@ -86,7 +86,7 @@ namespace MYDENTIST.Form
                 //MessageBox.Show(GetIndexKaryawan(row));
 
                 PopUpKaryawan popKaryawan = new PopUpKaryawan(GetIndexKaryawan(row));
-                popKaryawan.AddItemCallback = new AddItemDelegate(this.AddItemCallbackPopUpKaryawan);
+                popKaryawan.AddItemCallback = new AddItemDelegateKaryawan(this.AddItemCallbackPopUpKaryawan);
                 popKaryawan.ShowDialog();
             }
         }
@@ -104,7 +104,7 @@ namespace MYDENTIST.Form
                 
                 if (result == MessageBoxResult.Yes)
                 {
-                    koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
+                    koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
                     koneksi.SendQuery("DELETE FROM mydentist.tbl_karyawan WHERE mydentist.tbl_karyawan.id_karyawan = " + GetIndexKaryawan(row), null);
                     koneksi.Commit(true);
 
@@ -126,7 +126,7 @@ namespace MYDENTIST.Form
 
         private void txtPencarian_TextChanged(object sender, TextChangedEventArgs e)
         {
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             dgUsers.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_karyawan WHERE " +
                                   "mydentist.tbl_karyawan.nama_karyawan LIKE '%" + txtPencarian.Text + "%' OR " +
                                   "mydentist.tbl_karyawan.alamat_karyawan LIKE '%" + txtPencarian.Text + "%' OR " +

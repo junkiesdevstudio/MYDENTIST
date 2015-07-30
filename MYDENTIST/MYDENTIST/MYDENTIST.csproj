@@ -38,6 +38,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Windows.Shell, Version=3.5.41019.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.5.4\Assemblies\v4.0\MySql.Data.dll</HintPath>
@@ -46,6 +47,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.5.4\Assemblies\v4.0\MySql.Web.dll</HintPath>
     </Reference>
+    <Reference Include="RibbonControlsLibrary, Version=3.5.41019.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Controls.Ribbon" />
@@ -60,6 +62,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -85,6 +89,7 @@
     <Compile Include="Class\DatabaseHelper\Misc\Parsing.cs" />
     <Compile Include="Class\DatabaseHelper\Misc\Status.cs" />
     <Compile Include="Class\DatabaseHelper\ParameterData.cs" />
+    <Compile Include="Class\SettingHelper.cs" />
     <Compile Include="Class\XamlHelper.cs" />
     <Compile Include="FormMain.xaml.cs">
       <DependentUpon>FormMain.xaml</DependentUpon>
@@ -95,8 +100,14 @@
     <Compile Include="Form\FormObat.xaml.cs">
       <DependentUpon>FormObat.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Form\FormPasien.xaml.cs">
+      <DependentUpon>FormPasien.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Form\PopUp\PopUpKaryawan.xaml.cs">
       <DependentUpon>PopUpKaryawan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\PopUp\PopUpPasien.xaml.cs">
+      <DependentUpon>PopUpPasien.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -138,7 +149,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Form\FormPasien.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Form\PopUp\PopUpKaryawan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\PopUp\PopUpPasien.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
-﻿using MYDENTIST.Class.DatabaseHelper;
+﻿using MYDENTIST.Class;
+using MYDENTIST.Class.DatabaseHelper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,7 +23,7 @@ namespace MYDENTIST.Form.PopUp
     /// Interaction logic for PopUpKaryawan.xaml
     /// </summary>
     /// 
-    public delegate void AddItemDelegate();
+    public delegate void AddItemDelegateKaryawan();
 
 
     //Untuk Form yang berdiri sendiri alia tidak menempel (PopUp) di MainForm, menggunakan Base class WINDOW (FormKaryawan.xaml) --> Add -> Window
@@ -31,7 +32,7 @@ namespace MYDENTIST.Form.PopUp
 
     public partial class PopUpKaryawan : Window
     {
-        public AddItemDelegate AddItemCallback;
+        public AddItemDelegateKaryawan AddItemCallback;
 
         private cds_MYSQLKonektor koneksi;
         private ParameterData[] param;
@@ -57,7 +58,7 @@ namespace MYDENTIST.Form.PopUp
             datePick.SelectedDate = DateTime.Today; 
 
             //@Bahar : Melakukan Koneksi
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
         }
 
         //@Bahar : Constructor untuk edit popUp
@@ -72,7 +73,7 @@ namespace MYDENTIST.Form.PopUp
             btnSimpan.Content = "Update";
             txtID.Text = IdKaryawan;
 
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             FetchEditData();
         
         }
@@ -124,7 +125,7 @@ namespace MYDENTIST.Form.PopUp
                                           new ParameterData("tglmasuk_karyawan", datePick.Text), 
                                           new ParameterData("keterangan_karyawan", txtKeterangan.Text)};
 
-            koneksi.InsertRow("mydentist", "tbl_karyawan", true, param);
+            koneksi.InsertRow(SettingHelper.database, "tbl_karyawan", true, param);
 
             //@Bahar : Penting ketika melakukan fungsi InsertRow, kalau tidak dicommit data gk akan masuk ke database
             koneksi.Commit(true);
@@ -147,7 +148,7 @@ namespace MYDENTIST.Form.PopUp
                                           new ParameterData("telp_karyawan", txtTelp.Text), 
                                           new ParameterData("tglmasuk_karyawan", datePick.Text), 
                                           new ParameterData("keterangan_karyawan", txtKeterangan.Text)};
-            koneksi.UpdateRow("mydentist", "tbl_karyawan", "id_karyawan=" + txtID.Text, 0, param);
+            koneksi.UpdateRow(SettingHelper.database, "tbl_karyawan", "id_karyawan=" + txtID.Text, 0, param);
             koneksi.Commit(true);
 
             AddItemCallback();

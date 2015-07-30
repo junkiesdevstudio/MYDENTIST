@@ -25,6 +25,7 @@ namespace MYDENTIST
 
         private void btnKaryawan_Click(object sender, RoutedEventArgs e)
         {
+            
             UIPanel.Children.Clear();
             FormKaryawan inputGrid = new FormKaryawan();
             UIPanel.Children.Add(inputGrid);
@@ -34,6 +35,13 @@ namespace MYDENTIST
         {
             UIPanel.Children.Clear();
             FormObat inputGrid = new FormObat();
+            UIPanel.Children.Add(inputGrid);
+        }
+
+        private void btnPasien_Click(object sender, RoutedEventArgs e)
+        {
+            UIPanel.Children.Clear();
+            FormPasien inputGrid = new FormPasien();
             UIPanel.Children.Add(inputGrid);
         }
     }
