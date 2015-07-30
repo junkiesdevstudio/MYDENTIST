@@ -23,7 +23,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Edit" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnEdit_Click"/>
+                                <Button Content="Ubah" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnEdit_Click"/>
                                 <Button Content="Hapus" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnHapus_Click"/>
                             </StackPanel>
                         </DataTemplate>

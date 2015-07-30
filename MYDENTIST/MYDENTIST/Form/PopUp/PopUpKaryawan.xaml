@@ -17,6 +17,7 @@
         <TextBox x:Name="txtKeterangan" HorizontalAlignment="Left" Height="91" Margin="84,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377" AcceptsReturn="True"/>
         <Button x:Name="btnBatal" Content="Batal" HorizontalAlignment="Left" Margin="386,369,0,0" VerticalAlignment="Top" Width="75" Click="btnBatal_Click"/>
         <Button x:Name="btnSimpan" Content="Simpan" HorizontalAlignment="Left" Margin="296,369,0,0" VerticalAlignment="Top" Width="75" Click="btnSimpan_Click"/>
+        <TextBox x:Name="txtID" HorizontalAlignment="Left" Height="23" Margin="84,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="34" Visibility="Hidden"/>
 
 
 

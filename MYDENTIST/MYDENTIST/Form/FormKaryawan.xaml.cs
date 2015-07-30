@@ -83,7 +83,11 @@ namespace MYDENTIST.Form
 
             if (dgUsers.SelectedCells.Count > 0)
             {
-                MessageBox.Show(GetIndexKaryawan(row));
+                //MessageBox.Show(GetIndexKaryawan(row));
+
+                PopUpKaryawan popKaryawan = new PopUpKaryawan(GetIndexKaryawan(row));
+                popKaryawan.AddItemCallback = new AddItemDelegate(this.AddItemCallbackPopUpKaryawan);
+                popKaryawan.ShowDialog();
             }
         }
 
@@ -93,7 +97,21 @@ namespace MYDENTIST.Form
             var button = (FrameworkElement)sender;
             var row = (DataGridRow)button.Tag;
 
-            MessageBox.Show("Hapus");
+            if (dgUsers.SelectedCells.Count > 0)
+            {
+                MessageBoxResult result = MessageBox.Show("Hapus Data Karyawan?", "Konfirmasi", MessageBoxButton.YesNo);
+
+                
+                if (result == MessageBoxResult.Yes)
+                {
+                    koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
+                    koneksi.SendQuery("DELETE FROM mydentist.tbl_karyawan WHERE mydentist.tbl_karyawan.id_karyawan = " + GetIndexKaryawan(row), null);
+                    koneksi.Commit(true);
+
+                    ShowDataTabel();
+                }
+
+            }
         }
 
 
