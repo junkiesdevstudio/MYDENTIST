@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
+             xml:lang="id-ID"
              d:DesignHeight="300" HorizontalAlignment="Stretch" d:DesignWidth="710" >
     
     
@@ -23,7 +24,7 @@
                 <DataGridTextColumn Header="Jenis" Binding="{Binding JenisKaryawan}"  Width="100" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Alamat" Binding="{Binding AlamatKaryawan}"  Width="300" IsReadOnly="True" CanUserResize="True"/>
                 <DataGridTextColumn Header="Telp." Binding="{Binding Telp}"  Width="150" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Tanggal Masuk" Binding="{Binding Tanggal_Masuk}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Tanggal Masuk" Binding="{Binding Tanggal_Masuk }"  Width="150" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="250" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Aksi" Width="140">
                     <DataGridTemplateColumn.CellTemplate>

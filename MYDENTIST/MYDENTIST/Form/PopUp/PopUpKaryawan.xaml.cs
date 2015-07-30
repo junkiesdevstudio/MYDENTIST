@@ -47,10 +47,10 @@ namespace MYDENTIST.Form.PopUp
             btnSimpan.Content = "Simpan";
 
             //@Bahar : Format Tanggal (id-ID)
-            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
-            ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
-            Thread.CurrentThread.CurrentCulture = ci;
-
+            //CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
+            //ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            //Thread.CurrentThread.CurrentCulture = ci;
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
             //@Bahar : Jenis ini static, jadi gk tak simpen di database
             cmbJenis.Items.Add("Dokter");
             cmbJenis.Items.Add("Perawat");
@@ -72,7 +72,7 @@ namespace MYDENTIST.Form.PopUp
             this.Title = "Ubah Data Karyawan";
             btnSimpan.Content = "Update";
             txtID.Text = IdKaryawan;
-
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             FetchEditData();
         
@@ -95,6 +95,8 @@ namespace MYDENTIST.Form.PopUp
             }
             catch (Exception ex)
             {
+
+                koneksi.Dispose();
                 MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
@@ -117,12 +119,14 @@ namespace MYDENTIST.Form.PopUp
 
         void SimpanNew()
         {
+
+            
             //@Bahar : ParameterData dalam bentuk Array (Menyesuakian Database)
             param = new ParameterData[] { new ParameterData("nama_karyawan", txtNama.Text),
                                           new ParameterData("jenis_karyawan", cmbJenis.SelectedItem),
                                           new ParameterData("alamat_karyawan", txtAlamat.Text),
                                           new ParameterData("telp_karyawan", txtTelp.Text), 
-                                          new ParameterData("tglmasuk_karyawan", datePick.Text), 
+                                          new ParameterData("tglmasuk_karyawan", datePick.SelectedDate), 
                                           new ParameterData("keterangan_karyawan", txtKeterangan.Text)};
 
             koneksi.InsertRow(SettingHelper.database, "tbl_karyawan", true, param);
@@ -146,7 +150,7 @@ namespace MYDENTIST.Form.PopUp
                                           new ParameterData("jenis_karyawan", cmbJenis.SelectedItem),
                                           new ParameterData("alamat_karyawan", txtAlamat.Text),
                                           new ParameterData("telp_karyawan", txtTelp.Text), 
-                                          new ParameterData("tglmasuk_karyawan", datePick.Text), 
+                                          new ParameterData("tglmasuk_karyawan", datePick.SelectedDate), 
                                           new ParameterData("keterangan_karyawan", txtKeterangan.Text)};
             koneksi.UpdateRow(SettingHelper.database, "tbl_karyawan", "id_karyawan=" + txtID.Text, 0, param);
             koneksi.Commit(true);
