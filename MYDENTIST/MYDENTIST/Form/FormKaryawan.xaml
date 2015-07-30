@@ -7,7 +7,7 @@
              d:DesignHeight="300" HorizontalAlignment="Stretch" d:DesignWidth="710">
     <Grid>
         <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="txtPencarian_TextChanged"/>
 
         <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="10,38,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" >
             <DataGrid.Columns>
@@ -15,10 +15,10 @@
                 <DataGridTextColumn Header="No" Binding="{Binding NoKaryawan}" Width="50" IsReadOnly="True" />
                 <DataGridTextColumn Header="Nama" Binding="{Binding NamaKaryawan}"  Width="200" IsReadOnly="True" />
                 <DataGridTextColumn Header="Jenis" Binding="{Binding JenisKaryawan}"  Width="100" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Alamat" Binding="{Binding AlamatKaryawan}"  Width="250" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Alamat" Binding="{Binding AlamatKaryawan}"  Width="300" IsReadOnly="True" CanUserResize="True"/>
                 <DataGridTextColumn Header="Telp." Binding="{Binding Telp}"  Width="150" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Tanggal Masuk" Binding="{Binding Tanggal_Masuk}"  Width="150" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="300" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="250" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Aksi" Width="140">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

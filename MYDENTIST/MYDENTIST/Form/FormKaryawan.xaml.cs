@@ -109,6 +109,8 @@ namespace MYDENTIST.Form
                     koneksi.Commit(true);
 
                     ShowDataTabel();
+
+                    koneksi.Dispose();
                 }
 
             }
@@ -120,6 +122,29 @@ namespace MYDENTIST.Form
         {
             DataRowView v = (DataRowView)dgUsers.Items[row.GetIndex()];
             return (string)v[0].ToString();
+        }
+
+        private void txtPencarian_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString("localhost", "root", "", 3306), true, System.Data.IsolationLevel.Serializable);
+            dgUsers.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_karyawan WHERE " +
+                                  "mydentist.tbl_karyawan.nama_karyawan LIKE '%" + txtPencarian.Text + "%' OR " +
+                                  "mydentist.tbl_karyawan.alamat_karyawan LIKE '%" + txtPencarian.Text + "%' OR " +
+                                  "mydentist.tbl_karyawan.telp_karyawan LIKE '%" + txtPencarian.Text + "%' OR " +
+                                  "mydentist.tbl_karyawan.keterangan_karyawan LIKE '%" + txtPencarian.Text + "%'", null).DefaultView;
+
+            ((DataGridTextColumn)dgUsers.Columns[0]).Binding = new Binding("id_karyawan");
+            //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[2]).Binding = new Binding("nama_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[3]).Binding = new Binding("jenis_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[4]).Binding = new Binding("alamat_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[5]).Binding = new Binding("telp_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[6]).Binding = new Binding("tglmasuk_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[7]).Binding = new Binding("keterangan_karyawan");
+
+
+            //@Bahar : Harus ditutup !!!
+            koneksi.Dispose();
         }
     }
 }
