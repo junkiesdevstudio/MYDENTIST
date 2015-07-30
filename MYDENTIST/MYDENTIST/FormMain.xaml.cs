@@ -15,10 +15,7 @@ using MYDENTIST.Form;
 
 namespace MYDENTIST
 {
-    /// <summary>
-    /// Interaction logic for FormMain.xaml
-    /// </summary>
-    /// 
+
     public partial class FormMain : Window
     {
         public FormMain()
