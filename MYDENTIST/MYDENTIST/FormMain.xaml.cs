@@ -18,7 +18,7 @@ namespace MYDENTIST
     /// <summary>
     /// Interaction logic for FormMain.xaml
     /// </summary>
-    /// assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssus
+    /// 
     public partial class FormMain : Window
     {
         public FormMain()
