@@ -23,9 +23,9 @@ namespace MYDENTIST.Form.PopUp
 
         public AddItemDelegatePasien AddItemCallback;
 
-        private cds_MYSQLKonektor koneksi;
+       private cds_MYSQLKonektor koneksi;
         private ParameterData[] param;
-        private bool isEdit = false;
+        private bool isEdit = false; 
         public PopUpPasien()
         {
             InitializeComponent();
