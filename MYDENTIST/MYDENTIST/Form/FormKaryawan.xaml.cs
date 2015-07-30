@@ -16,6 +16,8 @@ using MYDENTIST.Class;
 using MYDENTIST.Class.DatabaseHelper;
 using MYDENTIST.Form.PopUp;
 using System.Data;
+using System.Globalization;
+using System.Threading;
 
 namespace MYDENTIST.Form
 {
@@ -30,7 +32,6 @@ namespace MYDENTIST.Form
         public FormKaryawan()
         {
             InitializeComponent();
-
             ShowDataTabel();
         }
 
@@ -58,6 +59,7 @@ namespace MYDENTIST.Form
         //@Bahar : Manual binding data dari database ke kolom DataGrid
         void ShowDataTabel()
         {
+
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             dgUsers.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_karyawan", null).DefaultView;
             
@@ -68,6 +70,8 @@ namespace MYDENTIST.Form
             ((DataGridTextColumn)dgUsers.Columns[4]).Binding = new Binding("alamat_karyawan");
             ((DataGridTextColumn)dgUsers.Columns[5]).Binding = new Binding("telp_karyawan");
             ((DataGridTextColumn)dgUsers.Columns[6]).Binding = new Binding("tglmasuk_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[6]).Binding.StringFormat = "{0:dd MMMM yyyy}";
+
             ((DataGridTextColumn)dgUsers.Columns[7]).Binding = new Binding("keterangan_karyawan");
             
 
@@ -140,6 +144,7 @@ namespace MYDENTIST.Form
             ((DataGridTextColumn)dgUsers.Columns[4]).Binding = new Binding("alamat_karyawan");
             ((DataGridTextColumn)dgUsers.Columns[5]).Binding = new Binding("telp_karyawan");
             ((DataGridTextColumn)dgUsers.Columns[6]).Binding = new Binding("tglmasuk_karyawan");
+            ((DataGridTextColumn)dgUsers.Columns[6]).Binding.StringFormat = "{0:dd MMMM yyyy}";
             ((DataGridTextColumn)dgUsers.Columns[7]).Binding = new Binding("keterangan_karyawan");
 
 

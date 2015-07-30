@@ -61,6 +61,7 @@ namespace MYDENTIST.Form.PopUp
             }
             catch (Exception ex)
             {
+                koneksi.Dispose();
                 MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
            
