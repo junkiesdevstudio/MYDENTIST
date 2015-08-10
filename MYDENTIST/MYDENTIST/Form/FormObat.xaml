@@ -4,27 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
+             xml:lang="id-ID"
               d:DesignHeight="300" HorizontalAlignment="Stretch" d:DesignWidth="710">
     <Grid>
         <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
-        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
 
-        <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="10,38,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" >
+        <DataGrid Name="dgObat" AutoGenerateColumns="False" Margin="10,41,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn Header="No" Binding="{Binding NoKaryawan}" Width="50" IsReadOnly="True" />
                 <DataGridTextColumn Header="Nama" Binding="{Binding NamaKaryawan}"  Width="200" IsReadOnly="True" />
                 <DataGridTextColumn Header="Jenis" Binding="{Binding JenisKaryawan}"  Width="100" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Alamat" Binding="{Binding AlamatKaryawan}"  Width="300" IsReadOnly="True" CanUserResize="True"/>
-                <DataGridTextColumn Header="Telp." Binding="{Binding Telp}"  Width="150" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Tanggal Masuk" Binding="{Binding Tanggal_Masuk}"  Width="150" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="250" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Harga Beli" Binding="{Binding AlamatKaryawan}"  Width="150" IsReadOnly="True" CanUserResize="True"/>
+                <DataGridTextColumn Header="Harga Jual" Binding="{Binding Telp}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Stok" Binding="{Binding Tanggal_Masuk}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="400" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Aksi" Width="140">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Ubah" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70"/>
-                                <Button Content="Hapus" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70"/>
+                                <Button Content="Ubah" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnEdit_Click"/>
+                                <Button Content="Hapus" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnHapus_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -39,7 +39,8 @@
             </DataGrid.RowDetailsTemplate>
             -->
         </DataGrid>
-        <Button x:Name="btn_tambah" Content="Tambah Karyawan" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" />
+        <Button x:Name="btn_tambah" Content="Tambah Obat" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambah_Click" />
+        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" TextChanged="txtPencarian_TextChanged"  />
 
 
 
