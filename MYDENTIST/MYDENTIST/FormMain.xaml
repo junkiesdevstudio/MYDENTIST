@@ -40,7 +40,7 @@
             </RibbonTab>
             <RibbonTab x:Name="TABAPPOINTMENT" Header="APPOINTMENT" KeyTip="H" >
                 <RibbonGroup x:Name="APPOINTMENT" Header="APPOINTMENT">
-                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" Click="btnAppointment_Click"/>
                 </RibbonGroup>
             </RibbonTab>
 

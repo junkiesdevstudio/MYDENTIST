@@ -93,6 +93,9 @@
     <Compile Include="FormMain.xaml.cs">
       <DependentUpon>FormMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Form\FormAppointment.xaml.cs">
+      <DependentUpon>FormAppointment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Form\FormKaryawan.xaml.cs">
       <DependentUpon>FormKaryawan.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="FormMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\FormAppointment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
