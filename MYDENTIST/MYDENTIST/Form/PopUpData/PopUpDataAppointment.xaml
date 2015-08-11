@@ -1,0 +1,28 @@
+﻿<Window x:Class="MYDENTIST.Form.PopUpData.PopUpDataAppointment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PopUpDataAppointment" Height="354.744" Width="542.745" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False">
+    <Grid>
+
+        <DatePicker x:Name="datePick" HorizontalAlignment="Left" Margin="110,26,0,0" VerticalAlignment="Top" Width="184" SelectedDateFormat="Long"/>
+        <TextBox x:Name="txtNoRm" HorizontalAlignment="Left" Height="23" Margin="110,57,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="184" IsReadOnly="True" Grid.RowSpan="2"/>
+        <Button x:Name="btnCariRM" Content="Cari" HorizontalAlignment="Left" Margin="299,57,0,0" VerticalAlignment="Top" Width="51" Grid.RowSpan="2" Click="btnCariRM_Click"/>
+        <TextBox x:Name="txtNamaPasien" HorizontalAlignment="Left" Height="23" Margin="110,87,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240" IsReadOnly="True"/>
+        <ComboBox x:Name="cmbNamaDokter" HorizontalAlignment="Left" Margin="110,118,0,0" VerticalAlignment="Top" Width="240" IsReadOnly="True"/>
+        <TextBox x:Name="txtKeterangan" HorizontalAlignment="Left" Height="91" Margin="110,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377" AcceptsReturn="True"/>
+        <Button x:Name="btnBatal" Content="Batal" HorizontalAlignment="Left" Margin="412,268,0,0" VerticalAlignment="Top" Width="75" Click="btnBatal_Click"/>
+        <Button x:Name="btnSimpan" Content="Simpan" HorizontalAlignment="Left" Margin="332,268,0,0" VerticalAlignment="Top" Width="75" Click="btnSimpan_Click"/>
+
+
+        <TextBox x:Name="txtTempIDPasien" HorizontalAlignment="Left" Height="23" Margin="110,267,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="46" IsReadOnly="True" Visibility="Hidden"/>
+        <TextBox x:Name="txtTempIDDokter" HorizontalAlignment="Left" Height="23" Margin="110,267,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="46" IsReadOnly="True" Visibility="Hidden"/>
+        <Label Content="Tanggal" HorizontalAlignment="Left" Margin="21,27,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <Label Content="No RM" HorizontalAlignment="Left" Margin="21,57,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <Label Content="Nama Pasien" HorizontalAlignment="Left" Margin="21,88,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <Label Content="Nama Dokter" HorizontalAlignment="Left" Margin="21,118,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <Label Content="Keterangan" HorizontalAlignment="Left" Margin="21,149,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+
+
+
+    </Grid>
+</Window>

@@ -1,7 +1,9 @@
 ﻿using MYDENTIST.Class;
 using MYDENTIST.Class.DatabaseHelper;
+using MYDENTIST.Form.PopUpData;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -31,12 +33,14 @@ namespace MYDENTIST.Form
         {
             InitializeComponent();
 
-            for (int i = 1950; i <= DateTime.UtcNow.Year; i++)
+
+            for (int i = DateTime.UtcNow.Year; i >= 1950; i--)
             {
                 ComboBoxItem item = new ComboBoxItem();
                 item.Content = i;
-                cmbTahun.Items.Add(item);
-                cmbTahun.SelectedValue = item;
+                string t = item.Content.ToString();
+                cmbTahun.Items.Add(t);
+                //Console.WriteLine(t);
             }
 
 
@@ -46,8 +50,11 @@ namespace MYDENTIST.Form
                 cmbBulan.Items.Add(now.ToString("MMMM"));
                 now = now.AddMonths(1);
 
-                cmbBulan.SelectedValue = DateTime.Now.ToString("MMMM");
+                
             }
+
+            cmbTahun.SelectedValue = DateTime.Now.ToString("yyyy");
+            cmbBulan.SelectedValue = DateTime.Now.ToString("MMMM");
 
             ShowDataTabel();
             mulaiFilter = true;
@@ -58,7 +65,7 @@ namespace MYDENTIST.Form
             try
             {
                 koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
-                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE MONTH(mydentist.tbl_appointment.tanggal_appo) = " + (cmbBulan.SelectedIndex + 1) + " AND YEAR(mydentist.tbl_appointment.tanggal_appo) =" + ((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), null).DefaultView;
+                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE MONTH(mydentist.tbl_appointment.tanggal_appo) = " + (cmbBulan.SelectedIndex + 1) + " AND YEAR(mydentist.tbl_appointment.tanggal_appo) =" + cmbTahun.SelectedItem.ToString(), null).DefaultView;
 
                 ((DataGridTextColumn)dgAppo.Columns[0]).Binding = new Binding("id_appo");
                 //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");
@@ -68,7 +75,10 @@ namespace MYDENTIST.Form
                 ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
                 ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
                 ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
-                ((DataGridTextColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo");
+
+
+
+                //((DataGridCheckBoxColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo") { Converter = new ItemCodeToBoolConverter() };
                 ((DataGridTextColumn)dgAppo.Columns[8]).Binding = new Binding("keterangan_appo");
 
                 //@Bahar : Harus ditutup !!!
@@ -98,7 +108,7 @@ namespace MYDENTIST.Form
                 ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
                 ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
                 ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
-                ((DataGridTextColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo");
+                //((DataGridCheckBoxColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo") { Converter = new ItemCodeToBoolConverter() };
                 ((DataGridTextColumn)dgAppo.Columns[8]).Binding = new Binding("keterangan_appo");
 
                 //@Bahar : Harus ditutup !!!
@@ -117,7 +127,8 @@ namespace MYDENTIST.Form
         {
             if (mulaiFilter)
             {
-                ShowDataTabelFilter(((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
+                //ShowDataTabelFilter(((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
+                ShowDataTabelFilter(cmbTahun.SelectedItem.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
             }
         }
 
@@ -125,7 +136,117 @@ namespace MYDENTIST.Form
         {
             if (mulaiFilter)
             {
-                ShowDataTabelFilter(((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
+                //ShowDataTabelFilter(((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
+                ShowDataTabelFilter(cmbTahun.SelectedItem.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
+            }
+        }
+
+        private void btn_tambah_Click(object sender, RoutedEventArgs e)
+        {
+            PopUpDataAppointment popUpDataAppointment = new PopUpDataAppointment();
+            popUpDataAppointment.AddItemCallback = new AddItemDelegatePopUpDataAppointment(this.AddItemCallbackPopUpDataAppointment);
+            popUpDataAppointment.ShowDialog();
+        }
+
+        private void AddItemCallbackPopUpDataAppointment()
+        {
+            //ShowDataTabel();
+            MessageBox.Show("Test");
+        }
+
+        private void btnHapus_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (FrameworkElement)sender;
+            var row = (DataGridRow)button.Tag;
+
+            if (dgAppo.SelectedCells.Count > 0)
+            {
+                MessageBoxResult result = MessageBox.Show("Hapus Data Appointment?", "Konfirmasi", MessageBoxButton.YesNo);
+
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+                    koneksi.SendQuery("DELETE FROM mydentist.tbl_appointment WHERE mydentist.tbl_appointment.id_appo = " + GetIndexKaryawan(row), null);
+                    koneksi.Commit(true);
+
+                    ShowDataTabel();
+
+                    koneksi.Dispose();
+                }
+
+            }
+        }
+
+        private string GetIndexKaryawan(DataGridRow row)
+        {
+            DataRowView v = (DataRowView)dgAppo.Items[row.GetIndex()];
+            return (string)v[0].ToString();
+        }
+
+        private void txtPencarian_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+            dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE " +
+                                  "mydentist.tbl_appointment.norm_appo LIKE '%" + txtPencarian.Text + "%' OR " +
+                                  "mydentist.tbl_appointment.namapasien_appo LIKE '%" + txtPencarian.Text + "%' OR " +
+                                  "mydentist.tbl_appointment.namadokter_appo LIKE '%" + txtPencarian.Text + "%' OR " +
+                                  "mydentist.tbl_appointment.tanggal_appo LIKE '%" + txtPencarian.Text + "%' OR " +
+                                  "mydentist.tbl_appointment.keterangan_appo LIKE '%" + txtPencarian.Text + "%'", null).DefaultView;
+
+            ((DataGridTextColumn)dgAppo.Columns[0]).Binding = new Binding("id_appo");
+            //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");
+            ((DataGridTextColumn)dgAppo.Columns[2]).Binding = new Binding("tanggal_appo");
+            ((DataGridTextColumn)dgAppo.Columns[2]).Binding.StringFormat = "{0:dd MMMM yyyy}";
+            ((DataGridTextColumn)dgAppo.Columns[3]).Binding = new Binding("jam_appo");
+            ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
+            ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
+            ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
+            //((DataGridCheckBoxColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo") { Converter = new ItemCodeToBoolConverter() };
+            ((DataGridTextColumn)dgAppo.Columns[8]).Binding = new Binding("keterangan_appo");
+
+
+            //@Bahar : Harus ditutup !!!
+            koneksi.Dispose();
+        }
+
+        void UpdateStatus()
+        {
+
+        }
+
+
+        private void Status_Click(object sender, RoutedEventArgs e)
+        {
+
+            var button = (FrameworkElement)sender;
+            var row = (DataGridRow)button.Tag;
+            ((CheckBox)sender).IsChecked = !((CheckBox)sender).IsChecked;
+
+            //MessageBox.Show(((CheckBox)sender).IsChecked.ToString());
+            MessageBoxResult result = MessageBox.Show("Ubah Status Appointment?", "Konfirmasi", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                //Update Status database
+                ((CheckBox)sender).IsChecked = !((CheckBox)sender).IsChecked;
+                MessageBox.Show(GetIndexKaryawan(row));
+            }
+        }
+
+        public class ItemCodeToBoolConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                int itemCode = (int)value;
+
+                return (itemCode == 1);
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                bool toBeInvoiced = (bool)value;
+                
+                return toBeInvoiced ? 1 : 0;
             }
         }
     }

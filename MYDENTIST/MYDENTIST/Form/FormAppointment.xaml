@@ -14,7 +14,7 @@
         </Grid.Background>
 
         <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
-        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" />
+        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" TextChanged="txtPencarian_TextChanged" />
 
         <DataGrid Name="dgAppo" AutoGenerateColumns="False" Margin="10,41,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" >
             <DataGrid.Columns>
@@ -25,14 +25,21 @@
                 <DataGridTextColumn Header="No RM" Binding="{Binding BiayaTerapi}"  Width="100" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Nama Pasien" Binding="{Binding KeteranganTerapi}"  Width="250" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Nama Dokter" Binding="{Binding KeteranganTerapi}"  Width="250" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding KeteranganTerapi}"  Width="80" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Status" Width="70">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox x:Name="RowFilterButton" IsChecked="{Binding status_appo}" Content="" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Click="Status_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Keterangan" Binding="{Binding KeteranganTerapi}"  Width="250" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Aksi" Width="140">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Ubah" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" />
-                                <Button Content="Hapus" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70"/>
+                                <Button Content="Hapus" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnHapus_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -47,7 +54,7 @@
             </DataGrid.RowDetailsTemplate>
             -->
         </DataGrid>
-        <Button x:Name="btn_tambah" Content="Tambah Appointment" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" />
+        <Button x:Name="btn_tambah" Content="Tambah Appointment" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambah_Click" />
         <ComboBox x:Name="cmbTahun" HorizontalAlignment="Left" Margin="354,10,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="cmbTahun_SelectionChanged"/>
         <ComboBox x:Name="cmbBulan" HorizontalAlignment="Left" Margin="545,8,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="cmbBulan_SelectionChanged"/>
         <Label Content="Tahun" HorizontalAlignment="Left" Margin="299,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
