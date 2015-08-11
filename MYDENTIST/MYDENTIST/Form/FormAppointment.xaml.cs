@@ -55,22 +55,31 @@ namespace MYDENTIST.Form
 
         void ShowDataTabel()
         {
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
-            dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE MONTH(mydentist.tbl_appointment.tanggal_appo) = " + (cmbBulan.SelectedIndex + 1) + " AND YEAR(mydentist.tbl_appointment.tanggal_appo) =" + ((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), null).DefaultView;
+            try
+            {
+                koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE MONTH(mydentist.tbl_appointment.tanggal_appo) = " + (cmbBulan.SelectedIndex + 1) + " AND YEAR(mydentist.tbl_appointment.tanggal_appo) =" + ((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), null).DefaultView;
 
-            ((DataGridTextColumn)dgAppo.Columns[0]).Binding = new Binding("id_appo");
-            //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");
-            ((DataGridTextColumn)dgAppo.Columns[2]).Binding = new Binding("tanggal_appo");
-            ((DataGridTextColumn)dgAppo.Columns[2]).Binding.StringFormat = "{0:dd MMMM yyyy}";
-            ((DataGridTextColumn)dgAppo.Columns[3]).Binding = new Binding("jam_appo");
-            ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
-            ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
-            ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
-            ((DataGridTextColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo");
-            ((DataGridTextColumn)dgAppo.Columns[8]).Binding = new Binding("keterangan_appo");
+                ((DataGridTextColumn)dgAppo.Columns[0]).Binding = new Binding("id_appo");
+                //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");
+                ((DataGridTextColumn)dgAppo.Columns[2]).Binding = new Binding("tanggal_appo");
+                ((DataGridTextColumn)dgAppo.Columns[2]).Binding.StringFormat = "{0:dd MMMM yyyy}";
+                ((DataGridTextColumn)dgAppo.Columns[3]).Binding = new Binding("jam_appo");
+                ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
+                ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
+                ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
+                ((DataGridTextColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo");
+                ((DataGridTextColumn)dgAppo.Columns[8]).Binding = new Binding("keterangan_appo");
 
-            //@Bahar : Harus ditutup !!!
-            koneksi.Dispose();
+                //@Bahar : Harus ditutup !!!
+                koneksi.Dispose();
+            }
+            catch (Exception e)
+            {
+                dgAppo.ItemsSource = null;
+                //dgAppo.Items.Refresh();
+                koneksi.Dispose();
+            }
         }
 
         void ShowDataTabelFilter(string tahun, string bulan)
