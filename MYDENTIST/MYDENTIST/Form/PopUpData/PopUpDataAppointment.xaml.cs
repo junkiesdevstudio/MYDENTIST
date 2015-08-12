@@ -43,6 +43,8 @@ namespace MYDENTIST.Form.PopUpData
             DataDokter();
 
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+
+            koneksi.Dispose();
         }
 
 
@@ -58,7 +60,7 @@ namespace MYDENTIST.Form.PopUpData
             Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             FetchEditData();
-        
+            koneksi.Dispose();
         }
 
         void FetchEditData()

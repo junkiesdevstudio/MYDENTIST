@@ -11,7 +11,7 @@
         <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
         <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"  />
 
-        <DataGrid Name="dgTerapi" AutoGenerateColumns="False" Margin="10,41,10,79" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" CellEditEnding="dgTerapi_CellEditEnding" SelectedCellsChanged="dgTerapi_SelectedCellsChanged" CurrentCellChanged="dgTerapi_CurrentCellChanged" >
+        <DataGrid Name="dgTerapi" AutoGenerateColumns="False" Margin="10,41,10,79" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" CellEditEnding="dgTerapi_CellEditEnding" SelectedCellsChanged="dgTerapi_SelectedCellsChanged" CurrentCellChanged="dgTerapi_CurrentCellChanged" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdTerapi}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn Header="No" Binding="{Binding NoTerapi}" Width="50" IsReadOnly="True" />

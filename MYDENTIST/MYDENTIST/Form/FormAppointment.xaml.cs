@@ -2,6 +2,7 @@
 using MYDENTIST.Class.DatabaseHelper;
 using MYDENTIST.Form.PopUpData;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -90,6 +91,8 @@ namespace MYDENTIST.Form
                 //dgAppo.Items.Refresh();
                 koneksi.Dispose();
             }
+
+            //Warna();
         }
 
         void ShowDataTabelFilter(string tahun, string bulan)
@@ -110,17 +113,23 @@ namespace MYDENTIST.Form
                 ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
                 //((DataGridCheckBoxColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo") { Converter = new ItemCodeToBoolConverter() };
                 ((DataGridTextColumn)dgAppo.Columns[8]).Binding = new Binding("keterangan_appo");
-
+                //Warna();
                 //@Bahar : Harus ditutup !!!
                 koneksi.Dispose();
+                
 
             }
             catch (Exception e)
             {
+                //Warna();
+
                 dgAppo.ItemsSource = null; 
                 //dgAppo.Items.Refresh();
                 koneksi.Dispose();
             }
+            //Warna();
+
+
         }
 
         private void cmbTahun_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -129,6 +138,7 @@ namespace MYDENTIST.Form
             {
                 //ShowDataTabelFilter(((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
                 ShowDataTabelFilter(cmbTahun.SelectedItem.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
+                //Warna();
             }
         }
 
@@ -138,6 +148,7 @@ namespace MYDENTIST.Form
             {
                 //ShowDataTabelFilter(((ComboBoxItem)cmbTahun.SelectedItem).Content.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
                 ShowDataTabelFilter(cmbTahun.SelectedItem.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
+               // Warna();
             }
         }
 
@@ -168,6 +179,8 @@ namespace MYDENTIST.Form
                 popUpDataAppointment.AddItemCallback = new AddItemDelegatePopUpDataAppointment(this.AddItemCallbackPopUpDataAppointment);
                 popUpDataAppointment.ShowDialog();
             }
+
+            //Warna();
         }
 
         private void btnHapus_Click(object sender, RoutedEventArgs e)
@@ -193,6 +206,8 @@ namespace MYDENTIST.Form
                 }
 
             }
+
+            //Warna();
         }
 
         private string GetIndexKaryawan(DataGridRow row)
@@ -225,8 +240,10 @@ namespace MYDENTIST.Form
             ((DataGridTextColumn)dgAppo.Columns[8]).Binding = new Binding("keterangan_appo");
 
 
+            
             //@Bahar : Harus ditutup !!!
             koneksi.Dispose();
+
         }
 
 
@@ -264,6 +281,8 @@ namespace MYDENTIST.Form
                 MessageBox.Show("Data status appointment berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 koneksi.Dispose();
+
+                //Warna();
                 //MessageBox.Show(GetIndexKaryawan(row));
             }
         }
@@ -283,6 +302,92 @@ namespace MYDENTIST.Form
                 
                 return toBeInvoiced ? 1 : 0;
             }
+        }
+
+        private void dgAppo_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString(); 
+        }
+
+        public IEnumerable<DataGridRow> GetDataGridRows(DataGrid grid)
+        {
+            var itemsSource = grid.ItemsSource as IEnumerable;
+            if (null == itemsSource) yield return null;
+            foreach (var item in itemsSource)
+            {
+                var row = grid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+                if (null != row) yield return row;
+            }
+        }
+
+        private void dgAppo_Loaded(object sender, RoutedEventArgs e)
+        {
+
+           // Warna();
+
+        }
+
+        void Warna()
+        {
+            for (int i = 0; i < dgAppo.Items.Count; i++)
+            {
+                DataGridRow row = (DataGridRow)dgAppo.ItemContainerGenerator.ContainerFromIndex(i);
+                CheckBox checkBox = FindChild<CheckBox>(row, "RowFilterButton");
+                if (checkBox != null && checkBox.IsChecked == true)
+                {
+                    //e.Row.Background = new SolidColorBrush(Colors.Red);
+                    row.Background = new SolidColorBrush(Colors.GreenYellow);
+                    //MessageBox.Show("AAA");
+                }
+            }
+        }
+
+        public static T FindChild<T>(DependencyObject parent, string childName)
+           where T : DependencyObject
+        {
+            // Confirm parent is valid.  
+            if (parent == null) return null;
+
+            T foundChild = null;
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                // If the child is not of the request child type child 
+                T childType = child as T;
+                if (childType == null)
+                {
+                    // recursively drill down the tree 
+                    foundChild = FindChild<T>(child, childName);
+
+                    // If the child is found, break so we do not overwrite the found child.  
+                    if (foundChild != null) break;
+                }
+                else if (!string.IsNullOrEmpty(childName))
+                {
+                    var frameworkElement = child as FrameworkElement;
+                    // If the child's name is set for search 
+                    if (frameworkElement != null && frameworkElement.Name == childName)
+                    {
+                        // if the child's name is of the request name 
+                        foundChild = (T)child;
+                        break;
+                    }
+                }
+                else
+                {
+                    // child element found. 
+                    foundChild = (T)child;
+                    break;
+                }
+            }
+            return foundChild;
+        }
+
+        private void dgAppo_LayoutUpdated(object sender, EventArgs e)
+        {
+            Warna();
         }
     }
 }
