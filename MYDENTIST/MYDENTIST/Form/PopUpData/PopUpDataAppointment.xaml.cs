@@ -96,6 +96,8 @@ namespace MYDENTIST.Form.PopUpData
             {
                 cmbNamaDokter.Items.Add(CmbxData.Rows[i]["nama_karyawan"].ToString());
             }
+
+            koneksi.Dispose();
         }
 
         private void btnBatal_Click(object sender, RoutedEventArgs e)

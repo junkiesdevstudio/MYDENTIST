@@ -61,5 +61,12 @@ namespace MYDENTIST
             FormAppointment inputGrid = new FormAppointment();
             UIPanel.Children.Add(inputGrid);
         }
+
+        private void btnPresensi_Click(object sender, RoutedEventArgs e)
+        {
+            UIPanel.Children.Clear();
+            FormPresensi inputGrid = new FormPresensi();
+            UIPanel.Children.Add(inputGrid);
+        }
     }
 }

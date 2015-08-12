@@ -35,7 +35,7 @@
 
             <RibbonTab x:Name="TABPRESENSI" Header="PRESENSI" KeyTip="H" >
                 <RibbonGroup x:Name="PRESENSI" Header="PRESENSI">
-                    <RibbonButton LargeImageSource="Image/icon/icon_presensi.png" Label="PRESENSI" KeyTip="C" Width="65" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_presensi.png" Label="PRESENSI" KeyTip="C" Width="65" Click="btnPresensi_Click" />
                 </RibbonGroup>
             </RibbonTab>
             <RibbonTab x:Name="TABAPPOINTMENT" Header="APPOINTMENT" KeyTip="H" >

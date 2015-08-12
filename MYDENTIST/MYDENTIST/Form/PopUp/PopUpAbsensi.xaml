@@ -1,0 +1,8 @@
+﻿<Window x:Class="MYDENTIST.Form.PopUp.PopUpAbsensi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Absensi" Height="439.051" Width="498.175" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False">
+    <Grid>
+        <TextBox x:Name="txtTanggal" HorizontalAlignment="Left" Height="20" Margin="76,30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="173" IsReadOnly="True"/>
+    </Grid>
+</Window>
