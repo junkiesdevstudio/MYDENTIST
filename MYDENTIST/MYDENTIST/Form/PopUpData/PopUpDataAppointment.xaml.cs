@@ -42,7 +42,7 @@ namespace MYDENTIST.Form.PopUpData
 
             DataDokter();
 
-            
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
         }
 
 
@@ -63,6 +63,7 @@ namespace MYDENTIST.Form.PopUpData
 
         void FetchEditData()
         {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             DataTable Datatable = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE mydentist.tbl_appointment.id_appo = " + IDAppoinment, null);
             foreach (DataRow row in Datatable.Rows)
             {
@@ -117,7 +118,8 @@ namespace MYDENTIST.Form.PopUpData
             {
 
                 koneksi.Dispose();
-                MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -125,7 +127,7 @@ namespace MYDENTIST.Form.PopUpData
 
         void SimpanNew()
         {
-
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             //DataRowView drv = (DataRowView)cmbNamaDokter.SelectedItem;
             //String valueOfItem = drv["nama_karyawan"].ToString();
 
@@ -155,6 +157,7 @@ namespace MYDENTIST.Form.PopUpData
 
         void EditUpdate()
         {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             param = new ParameterData[] { new ParameterData("id_pasien", IDPasien),
                                           new ParameterData("tanggal_appo", datePick.SelectedDate),
                                           new ParameterData("norm_appo", txtNoRm.Text),
@@ -163,7 +166,7 @@ namespace MYDENTIST.Form.PopUpData
                                           new ParameterData("status_appo", status), 
                                           new ParameterData("keterangan_appo", txtKeterangan.Text)};
 
-            koneksi.UpdateRow(SettingHelper.database, "tbl_appointment", "id_appo=" + IDAppoinment, 0, param);
+            koneksi.UpdateRow(SettingHelper.database, "tbl_appointment", "id_appo =" + IDAppoinment, 0, param);
             koneksi.Commit(true);
 
             AddItemCallback();
