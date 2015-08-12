@@ -88,8 +88,8 @@ namespace MYDENTIST.Form.AmbilData
             {
                 DataRowView v = (DataRowView)dgPasien.Items[row.GetIndex()];
                 string idPasien = (string)v[0].ToString();
-                string NoRM = (string)v[2].ToString();
-                string NamaPasien = (string)v[3].ToString();
+                string NoRM = (string)v[1].ToString();
+                string NamaPasien = (string)v[2].ToString();
 
                 AddItemCallback(idPasien, NoRM, NamaPasien);
                 this.Close();
@@ -98,7 +98,9 @@ namespace MYDENTIST.Form.AmbilData
 
         private void btn_tambah_Click(object sender, RoutedEventArgs e)
         {
-
+            PopUpPasien poppasien = new PopUpPasien();
+            poppasien.AddItemCallback = new AddItemDelegatePasien(this.AddItemCallbackPopUpPasien);
+            poppasien.ShowDialog();
         }
 
         private void txtPencarian_TextChanged(object sender, TextChangedEventArgs e)

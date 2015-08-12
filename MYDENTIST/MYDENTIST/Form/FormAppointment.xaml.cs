@@ -150,8 +150,24 @@ namespace MYDENTIST.Form
 
         private void AddItemCallbackPopUpDataAppointment()
         {
-            //ShowDataTabel();
-            MessageBox.Show("Test");
+            ShowDataTabel();
+            //MessageBox.Show("Test");
+        }
+
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (FrameworkElement)sender;
+            var row = (DataGridRow)button.Tag;
+
+            if (dgAppo.SelectedCells.Count > 0)
+            {
+                //MessageBox.Show(GetIndexKaryawan(row));
+
+                PopUpDataAppointment popUpDataAppointment = new PopUpDataAppointment(GetIndexKaryawan(row));
+                popUpDataAppointment.AddItemCallback = new AddItemDelegatePopUpDataAppointment(this.AddItemCallbackPopUpDataAppointment);
+                popUpDataAppointment.ShowDialog();
+            }
         }
 
         private void btnHapus_Click(object sender, RoutedEventArgs e)
@@ -166,6 +182,7 @@ namespace MYDENTIST.Form
 
                 if (result == MessageBoxResult.Yes)
                 {
+
                     koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
                     koneksi.SendQuery("DELETE FROM mydentist.tbl_appointment WHERE mydentist.tbl_appointment.id_appo = " + GetIndexKaryawan(row), null);
                     koneksi.Commit(true);
@@ -183,6 +200,8 @@ namespace MYDENTIST.Form
             DataRowView v = (DataRowView)dgAppo.Items[row.GetIndex()];
             return (string)v[0].ToString();
         }
+
+
 
         private void txtPencarian_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -210,10 +229,7 @@ namespace MYDENTIST.Form
             koneksi.Dispose();
         }
 
-        void UpdateStatus()
-        {
 
-        }
 
 
         private void Status_Click(object sender, RoutedEventArgs e)
@@ -227,9 +243,28 @@ namespace MYDENTIST.Form
             MessageBoxResult result = MessageBox.Show("Ubah Status Appointment?", "Konfirmasi", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
+                koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
                 //Update Status database
                 ((CheckBox)sender).IsChecked = !((CheckBox)sender).IsChecked;
-                MessageBox.Show(GetIndexKaryawan(row));
+
+                bool statusbool = (bool)((CheckBox)sender).IsChecked;
+                int status;
+                if (statusbool)
+                    status = 1;
+                else
+                    status = 0;
+
+                ParameterData[] parameter = new ParameterData[] { new ParameterData("status_appo", status) };
+
+                koneksi.UpdateRow(SettingHelper.database, "tbl_appointment", "id_appo=" + GetIndexKaryawan(row), 0, parameter);
+                koneksi.Commit(true);
+
+                //AddItemCallback();
+
+                MessageBox.Show("Data status appointment berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                koneksi.Dispose();
+                //MessageBox.Show(GetIndexKaryawan(row));
             }
         }
 

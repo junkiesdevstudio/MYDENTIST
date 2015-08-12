@@ -49,6 +49,8 @@ namespace MYDENTIST.Form.PopUp
 
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             FetchEditData();
+
+            //MessageBox.Show(IdPasien);
         
         }
         private void btnSimpan_Click(object sender, RoutedEventArgs e)
