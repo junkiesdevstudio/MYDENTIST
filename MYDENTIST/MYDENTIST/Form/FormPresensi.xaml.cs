@@ -33,7 +33,7 @@ namespace MYDENTIST.Form
 
 
         private string StandardMasuk1 = "06:30";
-        private string StandardMasuk2 = "14:30:00";
+        private string StandardMasuk2 = "14:30";
         
         public FormPresensi()
         {

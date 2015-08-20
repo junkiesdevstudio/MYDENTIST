@@ -96,14 +96,7 @@
                                 <DataGridTextColumn Header="No RM" Binding="{Binding BiayaTerapi}"  Width="100" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="Nama Pasien" Binding="{Binding KeteranganTerapi}"  Width="250" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="Nama Dokter" Binding="{Binding KeteranganTerapi}"  Width="250" IsReadOnly="True"/>
-                                <DataGridTemplateColumn Header="Status" Width="70">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox x:Name="RowFilterButton" IsChecked="{Binding status_appo}" Content="" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-
-                                </DataGridTemplateColumn>
+                                
                                 <DataGridTextColumn Header="Keterangan" Binding="{Binding KeteranganTerapi}"  Width="250" IsReadOnly="True"/>
                                 
                             </DataGrid.Columns>

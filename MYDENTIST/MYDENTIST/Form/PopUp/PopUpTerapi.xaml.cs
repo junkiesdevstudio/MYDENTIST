@@ -36,7 +36,7 @@ namespace MYDENTIST.Form.PopUp
             this.Title = "Tambah Data Terapi";
             btnSimpan.Content = "Simpan";
 
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+           
         }
 
         public PopUpTerapi(string IdTerapi)
@@ -48,7 +48,7 @@ namespace MYDENTIST.Form.PopUp
             btnSimpan.Content = "Update";
             txtID.Text = IdTerapi;
 
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+           
             FetchEditData();
         
         }
@@ -63,7 +63,7 @@ namespace MYDENTIST.Form.PopUp
             }
             catch (Exception ex)
             {
-                koneksi.Dispose();
+
                 MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -75,6 +75,7 @@ namespace MYDENTIST.Form.PopUp
 
         void FetchEditData()
         {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             DataTable Datatable = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_terapi WHERE mydentist.tbl_terapi.id_terapi = " + txtID.Text, null);
             foreach (DataRow row in Datatable.Rows)
             {
@@ -84,6 +85,8 @@ namespace MYDENTIST.Form.PopUp
                 txtBiaya.Text = row["biaya_terapi"].ToString();  
                 txtKeterangan.Text = row["keterangan_terapi"].ToString();
             }
+
+            koneksi.Dispose();
         }
 
         private void txtBiaya_TextChanged(object sender, TextChangedEventArgs e)
@@ -123,6 +126,7 @@ namespace MYDENTIST.Form.PopUp
 
         void SimpanNew()
         {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             //@Bahar : ParameterData dalam bentuk Array (Menyesuakian Database)
             param = new ParameterData[] { new ParameterData("nama_terapi", txtNama.Text),
                                           new ParameterData("jenis_terapi",  txtJenis.Text),
@@ -136,16 +140,17 @@ namespace MYDENTIST.Form.PopUp
 
             //@Bahar : melaksanakan fungsi delegate
             AddItemCallback();
+            koneksi.Dispose();
 
+            this.Close();
             MessageBox.Show("Data terapi berhasil ditambah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //@Bahar : Penting, habis melakukan koneksi harus ditutup koneksi.Dispose() !!
-            //Jika tidak ditutup akan bertabrakan dengan koneksi lain yang aktif, alhasil Not Respond
-            koneksi.Dispose();
+
         }
 
         void EditUpdate()
         {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             param = new ParameterData[] { new ParameterData("nama_terapi", txtNama.Text),
                                           new ParameterData("jenis_terapi",  txtJenis.Text),
                                           new ParameterData("biaya_terapi", biayaAngka),
@@ -155,11 +160,35 @@ namespace MYDENTIST.Form.PopUp
             koneksi.Commit(true);
 
             AddItemCallback();
-
-            MessageBox.Show("Data terapi berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
-
             koneksi.Dispose();
 
+            this.Close();
+            MessageBox.Show("Data terapi berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            
+
+        }
+
+        private void txtNama_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtNama.Text != string.Empty)
+            {
+                txtBiaya.IsEnabled = true;
+                txtJenis.IsEnabled = true;
+            }
+            else
+            {
+                txtBiaya.IsEnabled = false;
+                txtJenis.IsEnabled = false;
+            }
+        }
+
+        private void txtJenis_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtJenis.Text == string.Empty)
+            {
+                txtJenis.Text = "0";
+            }
         }
     }
 }

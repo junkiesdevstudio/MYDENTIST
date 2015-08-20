@@ -33,6 +33,8 @@ namespace MYDENTIST.Form.PopUpData
         private string IDAppoinment;
         private bool isEdit;
         private string status;
+
+        private DateTime dJam;
         public PopUpDataAppointment()
         {
             InitializeComponent();
@@ -110,19 +112,31 @@ namespace MYDENTIST.Form.PopUpData
 
         private void btnSimpan_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
-                if (!isEdit) SimpanNew();
-                else EditUpdate();
+                dJam = DateTime.Parse(txtJam.Text);
 
+                try
+                {
+                    if (!isEdit) SimpanNew();
+                    else EditUpdate();
+
+                }
+                catch (Exception ex)
+                {
+
+                    koneksi.Dispose();
+                    //MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message);
+                }
             }
             catch (Exception ex)
             {
-
-                koneksi.Dispose();
-                //MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Cek penulisan waktu! Contoh format 00:00", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+
         }
 
 
@@ -135,6 +149,7 @@ namespace MYDENTIST.Form.PopUpData
 
             //@Bahar : ParameterData dalam bentuk Array (Menyesuakian Database)
             param = new ParameterData[] { new ParameterData("id_pasien", IDPasien),
+                                          new ParameterData("jam_appo", dJam),
                                           new ParameterData("tanggal_appo", datePick.SelectedDate),
                                           new ParameterData("norm_appo", txtNoRm.Text),
                                           new ParameterData("namapasien_appo", txtNamaPasien.Text), 
@@ -159,8 +174,12 @@ namespace MYDENTIST.Form.PopUpData
 
         void EditUpdate()
         {
+
+            
+
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             param = new ParameterData[] { new ParameterData("id_pasien", IDPasien),
+                                          new ParameterData("jam_appo", dJam),
                                           new ParameterData("tanggal_appo", datePick.SelectedDate),
                                           new ParameterData("norm_appo", txtNoRm.Text),
                                           new ParameterData("namapasien_appo", txtNamaPasien.Text), 
@@ -172,10 +191,12 @@ namespace MYDENTIST.Form.PopUpData
             koneksi.Commit(true);
 
             AddItemCallback();
+            koneksi.Dispose();
 
+            this.Close();
             MessageBox.Show("Data appointment berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            koneksi.Dispose();
+            
 
         }
 
@@ -193,6 +214,11 @@ namespace MYDENTIST.Form.PopUpData
             txtNoRm.Text = noRM;
             txtNamaPasien.Text = namapasien;
            
+        }
+
+        private void txtJam_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
 
         

@@ -59,7 +59,7 @@
 
             <RibbonTab x:Name="TABTRANSAKSI" Header="TRANSAKSI" KeyTip="H" >
                 <RibbonGroup x:Name="TRANSAKSI" Header="TRANSAKSI">
-                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" Click="btnTransaksi_Click"  />
                 </RibbonGroup>
             </RibbonTab>
             <RibbonTab x:Name="TABREKAP" Header="REKAP" KeyTip="H" >

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="MYDENTIST.Form.AmbilData.FormCariPasien"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="FormCariPasien" Height="399.635" Width="1076.278" Topmost="True" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" ResizeMode="NoResize"
+        Title="Form Cari Pasien" Height="399.635" Width="1076.278" Topmost="True" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" ResizeMode="NoResize"
         HorizontalAlignment="Stretch" >
     <Grid>
         <Grid.Background>

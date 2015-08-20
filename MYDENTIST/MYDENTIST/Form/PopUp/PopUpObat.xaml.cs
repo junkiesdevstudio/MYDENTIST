@@ -42,7 +42,7 @@ namespace MYDENTIST.Form.PopUp
             this.Title = "Tambah Data Obat";
             btnSimpan.Content = "Simpan";
 
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+            
         }
 
         public PopUpObat(string IdObat)
@@ -58,13 +58,16 @@ namespace MYDENTIST.Form.PopUp
             btnSimpan.Content = "Update";
             txtID.Text = IdObat;
 
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+            
             FetchEditData();
 
         }
 
         private void txtHargaBeli_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (txtHargaBeli.Text == string.Empty)
+                txtHargaBeli.Text = "0";
+
             string value = txtHargaBeli.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
             //.Replace("Rp", "").Replace(",", "").TrimStart('0');
 
@@ -94,6 +97,9 @@ namespace MYDENTIST.Form.PopUp
 
         private void txtHargaJual_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (txtHargaJual.Text == string.Empty)
+                txtHargaJual.Text = "0";
+
             string value = txtHargaJual.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
             //.Replace("Rp", "").Replace(",", "").TrimStart('0');
 
@@ -128,17 +134,27 @@ namespace MYDENTIST.Form.PopUp
 
         private void btnSimpan_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (txtNama.Text != string.Empty && cmbJenis.SelectedIndex != -1)
             {
-                if (!isEdit) SimpanNew();
-                else EditUpdate();
+                try
+                {
+                  
+                    if (!isEdit) SimpanNew();
+                    else EditUpdate();
+                    
+                }
+                catch (Exception ex)
+                {
+                
+                    MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Mohon data field dengan tanda * diisi !", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
-            }
-            catch (Exception ex)
-            {
-                koneksi.Dispose();
-                MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            
         }
 
 
@@ -159,7 +175,7 @@ namespace MYDENTIST.Form.PopUp
 
         void SimpanNew()
         {
-            //@Bahar : ParameterData dalam bentuk Array (Menyesuakian Database)
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             param = new ParameterData[] { new ParameterData("nama_obat", txtNama.Text),
                                           new ParameterData("jenis_obat",  cmbJenis.SelectedItem),
                                           new ParameterData("hargabeli_obat", biayaBeliAngka),
@@ -175,15 +191,17 @@ namespace MYDENTIST.Form.PopUp
             //@Bahar : melaksanakan fungsi delegate
             AddItemCallback();
 
+            koneksi.Dispose();
+
+            this.Close();
+
             MessageBox.Show("Data obat berhasil ditambah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //@Bahar : Penting, habis melakukan koneksi harus ditutup koneksi.Dispose() !!
-            //Jika tidak ditutup akan bertabrakan dengan koneksi lain yang aktif, alhasil Not Respond
-            koneksi.Dispose();
         }
 
         void EditUpdate()
         {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             param = new ParameterData[] { new ParameterData("nama_obat", txtNama.Text),
                                           new ParameterData("jenis_obat",  cmbJenis.SelectedItem),
                                           new ParameterData("hargabeli_obat", biayaBeliAngka),
@@ -195,11 +213,19 @@ namespace MYDENTIST.Form.PopUp
             koneksi.Commit(true);
 
             AddItemCallback();
-
-            MessageBox.Show("Data obat berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
-
             koneksi.Dispose();
 
+            this.Close();
+            MessageBox.Show("Data obat berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            
+
+        }
+
+        private void txtStok_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtStok.Text == string.Empty)
+                txtStok.Text = "0";
         }
 
     }

@@ -54,7 +54,7 @@ namespace MYDENTIST.Form
 
             if (dgTerapi.SelectedCells.Count > 0)
             {
-                MessageBoxResult result = MessageBox.Show("Hapus Data Karyawan?", "Konfirmasi", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Hapus Data Terapi?", "Konfirmasi", MessageBoxButton.YesNo);
 
 
                 if (result == MessageBoxResult.Yes)

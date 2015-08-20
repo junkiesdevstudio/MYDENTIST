@@ -8,18 +8,18 @@
             <ImageBrush ImageSource="../../image/background.jpg"/>
         </Grid.Background>
 
-        <TextBox x:Name="txtNama" HorizontalAlignment="Left" Height="23" Margin="84,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377"/>
+        <TextBox x:Name="txtNama" HorizontalAlignment="Left" Height="23" Margin="84,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377" TextChanged="txtNama_TextChanged"/>
         <Label Content="Nama" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="69"/>
         <Label Content="Jenis" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="69" RenderTransformOrigin="0.446,3.076"/>
         <Label Content="Biaya" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="69"/>
-        <TextBox x:Name="txtJenis"  HorizontalAlignment="Left" Margin="84,79,0,0" VerticalAlignment="Top" Width="152" />
+        <TextBox x:Name="txtJenis" IsEnabled="False"  HorizontalAlignment="Left" Margin="84,79,0,0" VerticalAlignment="Top" Width="152" Text="0" TextChanged="txtJenis_TextChanged" />
         <Label Content="Keterangan" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="69"/>
         <TextBox x:Name="txtKeterangan" HorizontalAlignment="Left" Height="91" Margin="84,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377" AcceptsReturn="True"/>
         <Button x:Name="btnBatal" Content="Batal" HorizontalAlignment="Left" Margin="386,259,0,0" VerticalAlignment="Top" Width="75" Click="btnBatal_Click"/>
         <Button x:Name="btnSimpan" Content="Simpan" HorizontalAlignment="Left" Margin="296,259,0,0" VerticalAlignment="Top" Width="75" Click="btnSimpan_Click"/>
         <TextBox x:Name="txtID" HorizontalAlignment="Left" Height="23" Margin="84,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="34" Visibility="Hidden"/>
         <Label Content="%" HorizontalAlignment="Left" Margin="241,80,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="22" RenderTransformOrigin="0.446,3.076"/>
-        <TextBox x:Name="txtBiaya"  HorizontalAlignment="Left" Margin="84,110,0,0" VerticalAlignment="Top" Width="152" TextChanged="txtBiaya_TextChanged" />
+        <TextBox x:Name="txtBiaya" IsEnabled="False" HorizontalAlignment="Left" Margin="84,110,0,0" VerticalAlignment="Top" Width="152" Text="0" TextChanged="txtBiaya_TextChanged" />
 
 
 

@@ -1,0 +1,519 @@
+﻿using MYDENTIST.Class;
+using MYDENTIST.Class.DatabaseHelper;
+using MYDENTIST.Form.AmbilData;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace MYDENTIST.Form
+{
+    /// <summary>
+    /// Interaction logic for FormTransaki.xaml
+    /// </summary>
+    public partial class FormTransaki : UserControl
+    {
+        private cds_MYSQLKonektor koneksi;
+        private ParameterData[] param;
+
+        private string IDPasien;
+
+        private decimal totalObat;
+        private decimal totalTerapi;
+
+        public FormTransaki()
+        {
+            InitializeComponent();
+            datePick.SelectedDate = DateTime.Today;
+            DataDokter();
+            ShowPerawat();
+            ((DataGridTextColumn)dgTerapi.Columns[3]).Binding.StringFormat = "{0:C2}";
+            ((DataGridTextColumn)dgObat.Columns[4]).Binding.StringFormat = "{0:C2}";
+            ((DataGridTextColumn)dgObat.Columns[5]).Binding.StringFormat = "{0:C2}";
+        }
+
+        private void btnCari_Click(object sender, RoutedEventArgs e)
+        {
+            FormCariPasien formCariPasien = new FormCariPasien();
+            formCariPasien.AddItemCallback = new AddItemDelegateAmbilDataPasien(this.AddItemCallbackAmbilDataPasien);
+            formCariPasien.ShowDialog();
+        }
+
+        private void AddItemCallbackAmbilDataPasien(string idPasien, string noRM, string namapasien)
+        {
+            //ShowDataTabel();
+
+            IDPasien = idPasien;
+            txtNoRm.Text = noRM;
+            txtNamaPasien.Text = namapasien;
+
+        }
+
+
+        void ShowPerawat()
+        {
+            try
+            {
+                koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+                dgPerawat.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_karyawan WHERE mydentist.tbl_karyawan.jenis_karyawan = 'Perawat'", null).DefaultView;
+
+                ((DataGridTextColumn)dgPerawat.Columns[0]).Binding = new Binding("id_karyawan");
+                //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_karyawan");
+                ((DataGridTextColumn)dgPerawat.Columns[1]).Binding = new Binding("nama_karyawan");
+                //((DataGridCheckBoxColumn)dgPerawat.Columns[3]).Binding = new Binding("jenis_karyawan");
+
+
+                //@Bahar : Harus ditutup !!!
+                koneksi.Dispose();
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+        int xNomor;
+        private void AddItemCallbackAmbilDataTerapi(string persen, string nama, int biaya)
+        {
+            /*
+            DataTable dt = new DataTable();
+            dt.Columns.Add("NamaTerapi");
+            dt.Columns.Add("Biaya");
+            DataRow newRow = dt.NewRow();
+
+            newRow["NamaTerapi"] = nama;
+            newRow["Biaya"] = biaya;
+            //dt.Rows.Add(newRow);
+            dt.ImportRow(newRow);
+            dgTerapi.ItemsSource = dt.DefaultView;
+             * */
+            int TotalTerapi = 0;
+            dgTerapi.Items.Add(new DataTerapi { NamaTerapi = nama, Biaya = biaya  });
+            dgTerapi.UpdateLayout();
+            for (int x = 0; x < dgTerapi.Items.Count;x++ )
+            {
+
+                var row = (DataGridRow)dgTerapi.ItemContainerGenerator.ContainerFromIndex(x);
+
+                DataTerapi v = (DataTerapi)dgTerapi.Items[row.GetIndex()];
+                //DataGridCell cell = DataGridHelper.GetCell(dgTerapi, x, 3);
+
+                //Console.WriteLine(v.Row.ItemArray[0]);
+                TotalTerapi += v.Biaya;
+                //Console.WriteLine(v.Biaya);
+            }
+
+
+
+            txtTotalTerapi.Text = TotalTerapi.ToString();
+        }
+
+
+        List<DataObat> myDataItems = new List<DataObat>(); 
+        private void AddItemCallbackAmbilDataObat(int persen, string nama, int biaya)
+        {
+            int TotalObat = 0;
+            dgObat.ItemsSource = null;
+            myDataItems.Add(new DataObat { QTY = 1, NamaObat = nama, Biaya = biaya});
+            
+
+
+            //dgObat.Items.Add(new DataObat { QTY = 1, NamaObat = nama, Biaya = biaya });
+            
+            dgObat.ItemsSource = myDataItems;
+            //DataGridCell cell = DataGridHelper.GetCell(dgObat, 0, 5);
+            //MessageBox.Show(cell.va);
+            //MessageBox.Show(dgObat.Items.Count.ToString());
+            dgObat.UpdateLayout();
+            for (int x = 0; x < dgObat.Items.Count; x++)
+            {
+
+                //var row = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(x);
+
+                //DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
+                DataGridCell cell = DataGridHelper.GetCell(dgObat, x, 5);
+                TextBlock tb = cell.Content as TextBlock;
+                ///Console.WriteLine(cell);
+                ///
+                //MessageBox.Show(cell.ToString());
+                string value = tb.Text.Replace("Rp", "").Replace(".", "").Replace(",00", "");
+                //MessageBox.Show(value);
+                TotalObat += int.Parse(value);
+                //Console.WriteLine(tb.Text);
+            }
+
+
+            txtTotalObat.Text = TotalObat.ToString();
+
+
+        }
+
+
+        private void dgObat_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            int TotalObat  = 0;
+
+            dgObat.UpdateLayout();
+            for (int x = 0; x < dgObat.Items.Count; x++)
+            {
+
+                //var row = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(x);
+
+                //DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
+                DataGridCell cell = DataGridHelper.GetCell(dgObat, x, 5);
+                TextBlock tb = cell.Content as TextBlock;
+                ///Console.WriteLine(cell);
+                ///
+                //MessageBox.Show(cell.ToString());
+
+                string value = tb.Text.Replace("Rp", "").Replace(".", "").Replace(",00", "");
+                TotalObat += int.Parse(value);
+                
+            }
+
+
+            txtTotalObat.Text = TotalObat.ToString();
+
+        }
+
+        void DataDokter()
+        {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+
+            DataTable CmbxData = new DataTable();
+            CmbxData = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_karyawan WHERE mydentist.tbl_karyawan.jenis_karyawan = 'Dokter'", null);
+            //cmbNamaDokter.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_karyawan WHERE mydentist.tbl_karyawan.jenis_karyawan = 'Dokter'", null).DefaultView;
+            //cmbNamaDokter.DisplayMemberPath = "nama_karyawan";
+            //cmbNamaDokter.DataContext = "nama_karyawan";
+            //cmbNamaDokter..valu = "nama_karyawan";
+
+            List<string> studentList = new List<string>();
+            for (int i = 0; i < CmbxData.Rows.Count; i++)
+            {
+                cmbNamaDokter.Items.Add(CmbxData.Rows[i]["nama_karyawan"].ToString());
+            }
+
+            koneksi.Dispose();
+        }
+
+        private void btn_tambahTerapi_Click(object sender, RoutedEventArgs e)
+        {
+            
+
+
+            FormCariTerapi formCariPasien = new FormCariTerapi();
+            formCariPasien.AddItemCallbackTerapi = new AddItemDelegateAmbilDataTerapi(this.AddItemCallbackAmbilDataTerapi);
+            formCariPasien.ShowDialog();
+        }
+
+        private void btnHapus_Click(object sender, RoutedEventArgs e)
+        {
+
+            var button = (FrameworkElement)sender;
+            var row = (DataGridRow)button.Tag;
+            dgTerapi.Items.RemoveAt(row.GetIndex());
+            int TotalTerapi = 0;
+            dgTerapi.UpdateLayout();
+            for (int x = 0; x < dgTerapi.Items.Count; x++)
+            {
+
+                var rows = (DataGridRow)dgTerapi.ItemContainerGenerator.ContainerFromIndex(x);
+
+                DataTerapi v = (DataTerapi)dgTerapi.Items[rows.GetIndex()];
+                //DataGridCell cell = DataGridHelper.GetCell(dgTerapi, x, 3);
+
+                //Console.WriteLine(v.Row.ItemArray[0]);
+                TotalTerapi += v.Biaya;
+                //Console.WriteLine(v.Biaya);
+            }
+
+
+
+            txtTotalTerapi.Text = TotalTerapi.ToString();
+
+            decimal TotalGrand = totalTerapi + totalObat;
+            //txtGrandTotal.Text = TotalGrand.ToString();
+            txtGrandTotal.Text = HitungGrandTotal(Convert.ToDouble(TotalGrand), double.Parse(txtDiskon.Text), double.Parse(txtCard.Text)).ToString();
+        }
+
+        private void btnHapusObat_Click(object sender, RoutedEventArgs e)
+        {
+
+            var button = (FrameworkElement)sender;
+            var row = (DataGridRow)button.Tag;
+            DataObat v = ((DataObat)(dgObat.SelectedItem));
+            myDataItems.Remove(v);
+            dgObat.ItemsSource = null;
+            int TotalObat = 0;
+            dgObat.ItemsSource = myDataItems;
+            dgObat.UpdateLayout();
+            for (int x = 0; x < dgObat.Items.Count; x++)
+            {
+
+                //var row = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(x);
+
+                //DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
+                DataGridCell cell = DataGridHelper.GetCell(dgObat, x, 5);
+                TextBlock tb = cell.Content as TextBlock;
+                ///Console.WriteLine(cell);
+                ///
+                //MessageBox.Show(cell.ToString());
+                string value = tb.Text.Replace("Rp", "").Replace(".", "").Replace(",00", "");
+                TotalObat += int.Parse(value);
+
+            }
+            
+            txtTotalObat.Text = TotalObat.ToString();
+
+            decimal TotalGrand = totalTerapi + totalObat;
+            //txtGrandTotal.Text = TotalGrand.ToString();
+
+            txtGrandTotal.Text = HitungGrandTotal(Convert.ToDouble(TotalGrand), double.Parse(txtDiskon.Text), double.Parse(txtCard.Text)).ToString();
+        }
+        public struct DataTerapi
+        {
+            public int No { set; get; }
+            public string NamaTerapi { set; get; }
+            public int Biaya { set; get; }
+        }
+
+        public class DataObat : INotifyPropertyChanged
+        {
+            public int No { set; get; }
+
+            private int qty;
+            private int biaya;
+            public string NamaObat { set; get; }
+            
+            public int QTY {
+                get { return qty; }
+                set
+                {
+                    this.qty = value;
+                    OnPropertyChanged("SubTotal");
+                }
+            }
+
+            public int Biaya
+            {
+                get { return biaya; }
+                set
+                {
+                    this.biaya = value;
+                    OnPropertyChanged("SubTotal");
+                }
+            }
+
+
+            public int SubTotal
+            {
+                get { return QTY * Biaya; }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            private void OnPropertyChanged(string propertyName)
+            {
+                var handler = PropertyChanged;
+                if (handler != null)
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+
+        static class DataGridHelper
+        {
+            static public DataGridCell GetCell(DataGrid dg, int row, int column)
+            {
+                DataGridRow rowContainer = GetRow(dg, row);
+
+                if (rowContainer != null)
+                {
+                    DataGridCellsPresenter presenter = GetVisualChild<DataGridCellsPresenter>(rowContainer);
+
+                    // try to get the cell but it may possibly be virtualized
+                    DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
+                    if (cell == null)
+                    {
+                        // now try to bring into view and retreive the cell
+                        dg.ScrollIntoView(rowContainer, dg.Columns[column]);
+                        cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
+                    }
+                    return cell;
+                }
+                return null;
+            }
+
+            static public DataGridRow GetRow(DataGrid dg, int index)
+            {
+                DataGridRow row = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(index);
+                if (row == null)
+                {
+                    // may be virtualized, bring into view and try again
+                    dg.ScrollIntoView(dg.Items[index]);
+                    row = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(index);
+                }
+                return row;
+            }
+
+            static T GetVisualChild<T>(Visual parent) where T : Visual
+            {
+                T child = default(T);
+                int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+                for (int i = 0; i < numVisuals; i++)
+                {
+                    Visual v = (Visual)VisualTreeHelper.GetChild(parent, i);
+                    child = v as T;
+                    if (child == null)
+                    {
+                        child = GetVisualChild<T>(v);
+                    }
+                    if (child != null)
+                    {
+                        break;
+                    }
+                }
+                return child;
+            }
+        }
+
+        void dgTerapi_LoadingRow(object sender, System.Windows.Controls.DataGridRowEventArgs e)
+        {
+            dgTerapi.ScrollIntoView(e.Row.Item);
+        }
+
+        private void txtTotalTerapi_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string value = txtTotalTerapi.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
+            //.Replace("Rp", "").Replace(",", "").TrimStart('0');
+
+            decimal ul;
+            //Check we are indeed handling a number
+            if (decimal.TryParse(value, out ul))
+            {
+                totalTerapi = ul;
+                //biayaBeliAngka = ul;
+                //ul /=  100;
+                //Unsub the event so we don't enter a loop
+                txtTotalTerapi.TextChanged -= txtTotalTerapi_TextChanged;
+                //Format the text as currency
+                txtTotalTerapi.Text = string.Format(CultureInfo.CreateSpecificCulture("id-ID"), "{0:C0}", ul);
+                txtTotalTerapi.TextChanged += txtTotalTerapi_TextChanged;
+                txtTotalTerapi.Select(txtTotalTerapi.Text.Length, 0);
+            }
+
+            decimal TotalGrand = totalTerapi + totalObat;
+
+            if (TotalGrand > 0)
+                txtGrandTotal.Text = HitungGrandTotal(Convert.ToDouble(TotalGrand), double.Parse(txtDiskon.Text), double.Parse(txtCard.Text)).ToString();
+               // txtGrandTotal.Text = TotalGrand.ToString();
+        }
+
+        private void btn_tambahObat_Click(object sender, RoutedEventArgs e)
+        {
+            FormCariObat formCariPasien = new FormCariObat();
+            formCariPasien.AddItemCallbackObat = new AddItemDelegateAmbilDataObat(this.AddItemCallbackAmbilDataObat);
+            formCariPasien.ShowDialog();
+        }
+
+        private void txtTotalObat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string value = txtTotalObat.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
+            //.Replace("Rp", "").Replace(",", "").TrimStart('0');
+
+            decimal ul;
+            //Check we are indeed handling a number
+            if (decimal.TryParse(value, out ul))
+            {
+                totalObat = ul;
+                //ul /=  100;
+                //Unsub the event so we don't enter a loop
+                txtTotalObat.TextChanged -= txtTotalObat_TextChanged;
+                //Format the text as currency
+                txtTotalObat.Text = string.Format(CultureInfo.CreateSpecificCulture("id-ID"), "{0:C0}", ul);
+                txtTotalObat.TextChanged += txtTotalObat_TextChanged;
+                txtTotalObat.Select(txtTotalObat.Text.Length, 0);
+            }
+
+            decimal TotalGrand = totalTerapi + totalObat;
+
+            if (TotalGrand > 0)
+                txtGrandTotal.Text = HitungGrandTotal(Convert.ToDouble(TotalGrand), double.Parse(txtDiskon.Text), double.Parse(txtCard.Text)).ToString();
+
+                //txtGrandTotal.Text = TotalGrand.ToString();
+
+        }
+
+        private void txtGrandTotal_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+
+            string value = txtGrandTotal.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
+            //.Replace("Rp", "").Replace(",", "").TrimStart('0');
+
+            decimal ul;
+            //Check we are indeed handling a number
+            if (decimal.TryParse(value, out ul))
+            {
+                //totalObat = ul;
+                //ul /=  100;
+                //Unsub the event so we don't enter a loop
+                txtGrandTotal.TextChanged -= txtGrandTotal_TextChanged;
+                //Format the text as currency
+                txtGrandTotal.Text = string.Format(CultureInfo.CreateSpecificCulture("id-ID"), "{0:C0}", ul);
+                txtGrandTotal.TextChanged += txtGrandTotal_TextChanged;
+                txtGrandTotal.Select(txtGrandTotal.Text.Length, 0);
+            }
+        }
+
+
+        private double HitungGrandTotal(double total, double diskon, double card)
+        {
+            // (total - diskon(dari total) + card(total - diskon) )
+            double hitungDiskon = ((diskon / 100) * total);
+            double hitungCard = ((card / 100) * (total - hitungDiskon));
+
+            //grandTotal = (total - hitungDiskon + hitungCard);
+
+            return Math.Round((total - hitungDiskon + hitungCard),0,MidpointRounding.AwayFromZero);
+        }
+
+        private void txtDiskon_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            decimal TotalGrand = totalTerapi + totalObat;
+
+            if (txtDiskon.Text == string.Empty)
+                txtDiskon.Text = "0";
+
+            if (TotalGrand > 0)
+             txtGrandTotal.Text = HitungGrandTotal(Convert.ToDouble(TotalGrand), double.Parse(txtDiskon.Text), double.Parse(txtCard.Text)).ToString();
+        }
+
+        private void txtCard_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            decimal TotalGrand = totalTerapi + totalObat;
+
+            if (txtCard.Text == string.Empty)
+                txtCard.Text = "0";
+
+            if (TotalGrand > 0)
+                txtGrandTotal.Text = HitungGrandTotal(Convert.ToDouble(TotalGrand), double.Parse(txtDiskon.Text), double.Parse(txtCard.Text)).ToString();
+        }
+
+    }
+
+
+}

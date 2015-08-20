@@ -22,7 +22,7 @@
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform Angle="1.028"/>
+
                     <TranslateTransform/>
                 </TransformGroup>
             </DatePicker.RenderTransform>
@@ -32,6 +32,10 @@
         <Button x:Name="btnBatal" Content="Batal" HorizontalAlignment="Left" Margin="386,369,0,0" VerticalAlignment="Top" Width="75" Click="btnBatal_Click"/>
         <Button x:Name="btnSimpan" Content="Simpan" HorizontalAlignment="Left" Margin="296,369,0,0" VerticalAlignment="Top" Width="75" Click="btnSimpan_Click"/>
         <TextBox x:Name="txtID" HorizontalAlignment="Left" Height="23" Margin="84,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="34" Visibility="Hidden"/>
+        <Label Content="*" HorizontalAlignment="Left" Margin="461,49,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="16" RenderTransformOrigin="3.562,0.52" Height="18" Foreground="#FFFF0C0C"/>
+        <Label Content="*" HorizontalAlignment="Left" Margin="461,110,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="16" RenderTransformOrigin="3.562,0.52" Height="18" Foreground="#FFFF0C0C"/>
+        <Label Content="*" HorizontalAlignment="Left" Margin="318,200,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="16" RenderTransformOrigin="3.562,0.52" Height="18" Foreground="#FFFF0C0C"/>
+        <Label Content="*" HorizontalAlignment="Left" Margin="228,79,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="16" RenderTransformOrigin="3.562,0.52" Height="18" Foreground="#FFFF0C0C"/>
 
 
 

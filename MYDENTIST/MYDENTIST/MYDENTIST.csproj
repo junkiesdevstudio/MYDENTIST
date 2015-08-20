@@ -48,6 +48,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MYDENTIST.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Image\Icon\UFO.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -109,8 +115,14 @@
     <Compile Include="FormMain.xaml.cs">
       <DependentUpon>FormMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Form\AmbilData\FormCariObat.xaml.cs">
+      <DependentUpon>FormCariObat.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Form\AmbilData\FormCariPasien.xaml.cs">
       <DependentUpon>FormCariPasien.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\AmbilData\FormCariTerapi.xaml.cs">
+      <DependentUpon>FormCariTerapi.xaml</DependentUpon>
     </Compile>
     <Compile Include="Form\FormAppointment.xaml.cs">
       <DependentUpon>FormAppointment.xaml</DependentUpon>
@@ -129,6 +141,9 @@
     </Compile>
     <Compile Include="Form\FormTerapi.xaml.cs">
       <DependentUpon>FormTerapi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormTransaki.xaml.cs">
+      <DependentUpon>FormTransaki.xaml</DependentUpon>
     </Compile>
     <Compile Include="Form\PopUpData\PopUpDataAppointment.xaml.cs">
       <DependentUpon>PopUpDataAppointment.xaml</DependentUpon>
@@ -185,7 +200,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Form\AmbilData\FormCariObat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Form\AmbilData\FormCariPasien.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\AmbilData\FormCariTerapi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,6 +233,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Form\FormTerapi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\FormTransaki.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

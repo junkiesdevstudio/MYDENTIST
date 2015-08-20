@@ -17,6 +17,7 @@ using MYDENTIST.Class;
 using MYDENTIST.Class.DatabaseHelper;
 using System.Data;
 using System.Media;
+using MySql.Data.MySqlClient;
 
 namespace MYDENTIST
 {
@@ -42,7 +43,22 @@ namespace MYDENTIST
 
             this.taskbarNotifier = new TaskbarNotifierAppointment();
             InitializeComponent();
+       
+            //koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+            //koneksi.SetKoneksiString(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port));
+
+            //MySqlConnection mysqlConnection = new MySqlConnection(koneksi.koneksiString);
+
+            //if(!koneksi.OpenKoneksi(mysqlConnection,10));
+            //MessageBox.Show("A");
+
+            UIPanel.Children.Clear();
+            FormTransaki inputGrid = new FormTransaki();
+            UIPanel.Children.Add(inputGrid);
+
+
             CheckReminder();
+            
         }
 
         void CheckReminder()
@@ -140,7 +156,8 @@ namespace MYDENTIST
                 // Trying to hide
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, (DispatcherOperationCallback)delegate(object o)
                 {
-                    //this.Hide();
+                    this.reallyCloseWindow = true;
+                    this.Close();
                     return null;
                 }, null);
             }
@@ -183,6 +200,13 @@ namespace MYDENTIST
             // Close this window.
             this.reallyCloseWindow = true;
             this.Close();
+        }
+
+        private void btnTransaksi_Click(object sender, RoutedEventArgs e)
+        {
+            UIPanel.Children.Clear();
+            FormTransaki inputGrid = new FormTransaki();
+            UIPanel.Children.Add(inputGrid);
         }
     }
 }

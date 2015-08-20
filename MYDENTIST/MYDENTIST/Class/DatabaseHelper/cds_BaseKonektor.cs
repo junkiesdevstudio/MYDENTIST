@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Windows;
 
 namespace MYDENTIST.Class.DatabaseHelper
 {
@@ -18,6 +19,8 @@ namespace MYDENTIST.Class.DatabaseHelper
         private static readonly object _lock = new object();
         private static uint ids = 0;
         public readonly uint id = GetID();
+
+        public bool isConnected;
 
         private static uint GetID()
         {
@@ -64,6 +67,9 @@ namespace MYDENTIST.Class.DatabaseHelper
                 {
                     if (i == attempts - 1) throw;
                     DebugOutput("OpenConnection", "Exception. Trying to connect again");
+
+                    //MessageBox.Show("Koneksi gagal, cek server database.", "Error");
+                    
                     System.Threading.Thread.Sleep(50);
                 }
             }

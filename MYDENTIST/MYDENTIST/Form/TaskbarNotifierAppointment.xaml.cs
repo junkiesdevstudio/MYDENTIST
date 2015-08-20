@@ -115,7 +115,7 @@ namespace MYDENTIST.Form
             try
             {
                 koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
-                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE mydentist.tbl_appointment.tanggal_appo = CURDATE()", null).DefaultView;
+                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE mydentist.tbl_appointment.tanggal_appo = CURDATE() AND mydentist.tbl_appointment.status_appo=0", null).DefaultView;
 
                 ((DataGridTextColumn)dgAppo.Columns[0]).Binding = new Binding("id_appo");
                 //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");

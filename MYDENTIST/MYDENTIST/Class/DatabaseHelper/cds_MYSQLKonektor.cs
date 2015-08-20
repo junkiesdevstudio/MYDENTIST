@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Windows;
 
 namespace MYDENTIST.Class.DatabaseHelper
 {
@@ -19,26 +20,43 @@ namespace MYDENTIST.Class.DatabaseHelper
 
         public cds_MYSQLKonektor(cds_KoneksiString options, bool isTransaction = true, IsolationLevel isolationLevel = IsolationLevel.Serializable)
         {
-            this.isolationLevel = isolationLevel;
-            this.isTransaction = isTransaction;
-            base.SetKoneksiString(options);
-            mysqlConnection = new MySqlConnection(base.koneksiString);
-            if (!base.OpenKoneksi(mysqlConnection, 10)) throw new Exception("Unable to connect");
-            if (isTransaction) mysqlTransaction = mysqlConnection.BeginTransaction(this.isolationLevel);
-            mysqlCommand = mysqlConnection.CreateCommand();
-            mysqlCommand.Connection = mysqlConnection;
+
+
+                this.isolationLevel = isolationLevel;
+                this.isTransaction = isTransaction;
+                base.SetKoneksiString(options);
+                mysqlConnection = new MySqlConnection(base.koneksiString);
+                if (!base.OpenKoneksi(mysqlConnection, 10)) throw new Exception("Unable to connect");
+                if (isTransaction) mysqlTransaction = mysqlConnection.BeginTransaction(this.isolationLevel);
+                mysqlCommand = mysqlConnection.CreateCommand();
+                mysqlCommand.Connection = mysqlConnection;
+
+
         }
 
         public cds_MYSQLKonektor(string connectionString, bool isTransaction = true, IsolationLevel isolationLevel = IsolationLevel.Serializable)
         {
-            this.isolationLevel = isolationLevel;
-            this.isTransaction = isTransaction;
-            base.SetKoneksiString(connectionString);
-            mysqlConnection = new MySqlConnection(base.koneksiString);
-            if (!base.OpenKoneksi(mysqlConnection, 10)) throw new Exception("Unable to connect");
-            if (isTransaction) mysqlTransaction = mysqlConnection.BeginTransaction(this.isolationLevel);
-            mysqlCommand = mysqlConnection.CreateCommand();
-            mysqlCommand.Connection = mysqlConnection;
+            try
+            {
+
+                
+
+                this.isolationLevel = isolationLevel;
+                this.isTransaction = isTransaction;
+                base.SetKoneksiString(connectionString);
+                mysqlConnection = new MySqlConnection(base.koneksiString);
+
+
+                if (!base.OpenKoneksi(mysqlConnection, 1)) throw new Exception("Unable to connect");
+                if (isTransaction) mysqlTransaction = mysqlConnection.BeginTransaction(this.isolationLevel);
+                mysqlCommand = mysqlConnection.CreateCommand();
+                mysqlCommand.Connection = mysqlConnection;
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("A");
+            }
         }
 
         public void Dispose()

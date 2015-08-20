@@ -34,7 +34,7 @@ namespace MYDENTIST.Form.PopUp
             this.Title = "Tambah Data Pasien";
             btnSimpan.Content = "Simpan";
 
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+            
         }
 
 
@@ -47,7 +47,7 @@ namespace MYDENTIST.Form.PopUp
             btnSimpan.Content = "Update";
             txtID.Text = IdPasien;
 
-            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+            
             FetchEditData();
 
             //MessageBox.Show(IdPasien);
@@ -55,17 +55,27 @@ namespace MYDENTIST.Form.PopUp
         }
         private void btnSimpan_Click(object sender, RoutedEventArgs e)
         {
-            try
+
+            if (txtNoRM.Text != string.Empty && txtNama.Text != string.Empty && txtAlamat.Text != string.Empty && txtTelp.Text != string.Empty)
             {
-                if (!isEdit) SimpanNew();
-                else EditUpdate();
+                try
+                {
+                    if (!isEdit) SimpanNew();
+                    else EditUpdate();
+
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Mohon data field dengan tanda * diisi !", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
-            catch (Exception ex)
-            {
-                koneksi.Dispose();
-                MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            
            
         }
 
@@ -76,6 +86,7 @@ namespace MYDENTIST.Form.PopUp
 
         void FetchEditData()
         {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             DataTable Datatable = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_pasien WHERE mydentist.tbl_pasien.id_pasien = " + txtID.Text, null);
             foreach (DataRow row in Datatable.Rows)
             {
@@ -86,11 +97,13 @@ namespace MYDENTIST.Form.PopUp
                 txtTelp.Text = row["telp_pasien"].ToString();
                 txtKeterangan.Text = row["keterangan_pasien"].ToString();
             }
+
+            koneksi.Dispose();
         }
 
         void SimpanNew()
         {
-            //@Bahar : ParameterData dalam bentuk Array (Menyesuakian Database)
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             param = new ParameterData[] { new ParameterData("norm_pasien", txtNoRM.Text),
                                           new ParameterData("nama_pasien",  txtNama.Text),
                                           new ParameterData("alamat_pasien", txtAlamat.Text),
@@ -104,16 +117,16 @@ namespace MYDENTIST.Form.PopUp
 
             //@Bahar : melaksanakan fungsi delegate
             AddItemCallback();
+            koneksi.Dispose();
 
+            this.Close();
             MessageBox.Show("Data pasien berhasil ditambah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //@Bahar : Penting, habis melakukan koneksi harus ditutup koneksi.Dispose() !!
-            //Jika tidak ditutup akan bertabrakan dengan koneksi lain yang aktif, alhasil Not Respond
-            koneksi.Dispose();
         }
 
         void EditUpdate()
         {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             param = new ParameterData[] { new ParameterData("norm_pasien", txtNoRM.Text),
                                           new ParameterData("nama_pasien",  txtNama.Text),
                                           new ParameterData("alamat_pasien", txtAlamat.Text),
@@ -124,10 +137,10 @@ namespace MYDENTIST.Form.PopUp
             koneksi.Commit(true);
 
             AddItemCallback();
-
-            MessageBox.Show("Data pasien berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
-
             koneksi.Dispose();
+
+            this.Close();
+            MessageBox.Show("Data pasien berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
     }

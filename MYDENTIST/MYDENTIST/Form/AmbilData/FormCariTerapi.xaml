@@ -1,0 +1,47 @@
+﻿<Window x:Class="MYDENTIST.Form.AmbilData.FormCariTerapi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+Title="Form Cari Terapi" Height="399.635" Width="1076.278" Topmost="True" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" ResizeMode="NoResize"
+        HorizontalAlignment="Stretch" >
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../../image/background.jpg"/>
+        </Grid.Background>
+
+        <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" />
+
+        <DataGrid Name="dgTerapi" AutoGenerateColumns="False" Margin="10,41,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" HorizontalGridLinesBrush="#FF8D8D8D" GridLinesVisibility="Horizontal" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding IdTerapi}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
+                <DataGridTextColumn Header="No" Binding="{Binding NoTerapi}" Width="50" IsReadOnly="True" />
+                <DataGridTextColumn Header="Nama" Binding="{Binding NamaTerapi}"  Width="250" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Jenis" Binding="{Binding JenisTerapi}"  Width="150" IsReadOnly="True" CanUserResize="True"/>
+                <DataGridTextColumn Header="Biaya" Binding="{Binding BiayaTerapi}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Keterangan" Binding="{Binding KeteranganTerapi}"  Width="300" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Aksi" Width="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Ubah" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70"/>
+                                <Button Content="Ambil" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" Click="btnAmbil_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <!--
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Details}" Margin="10" />
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+            -->
+        </DataGrid>
+        <Button x:Name="btn_tambah" Content="Tambah Terapi" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" />
+
+
+
+    </Grid>
+</Window>

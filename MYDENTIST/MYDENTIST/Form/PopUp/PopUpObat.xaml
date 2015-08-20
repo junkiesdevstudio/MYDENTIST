@@ -17,11 +17,11 @@
         <Button x:Name="btnBatal" Content="Batal" HorizontalAlignment="Left" Margin="386,318,0,0" VerticalAlignment="Top" Width="75" Click="btnBatal_Click" />
         <Button x:Name="btnSimpan" Content="Simpan" HorizontalAlignment="Left" Margin="296,318,0,0" VerticalAlignment="Top" Width="75" Click="btnSimpan_Click" />
         <TextBox x:Name="txtID" HorizontalAlignment="Left" Height="23" Margin="84,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="34" Visibility="Hidden"/>
-        <TextBox x:Name="txtHargaBeli"  HorizontalAlignment="Left" Margin="84,110,0,0" VerticalAlignment="Top" Width="152" TextChanged="txtHargaBeli_TextChanged"/>
+        <TextBox x:Name="txtHargaBeli" Text="0"  HorizontalAlignment="Left" Margin="84,110,0,0" VerticalAlignment="Top" Width="152" TextChanged="txtHargaBeli_TextChanged"/>
         <ComboBox x:Name="cmbJenis"  HorizontalAlignment="Left" Margin="84,79,0,0" VerticalAlignment="Top" Width="152" IsReadOnly="True"/>
         <Label Content="Harga Jual" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="69"/>
-        <TextBox x:Name="txtHargaJual"  HorizontalAlignment="Left" Margin="84,143,0,0" VerticalAlignment="Top" Width="152" TextChanged="txtHargaJual_TextChanged"/>
-        <TextBox x:Name="txtStok" HorizontalAlignment="Left" Height="23" Margin="84,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377"/>
+        <TextBox x:Name="txtHargaJual" Text="0" HorizontalAlignment="Left" Margin="84,143,0,0" VerticalAlignment="Top" Width="152" TextChanged="txtHargaJual_TextChanged"/>
+        <TextBox x:Name="txtStok" Text="1" HorizontalAlignment="Left" Height="23" Margin="84,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377" TextChanged="txtStok_TextChanged"/>
         <Label Content="Stok" HorizontalAlignment="Left" Margin="10,173,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="69"/>
 
 
