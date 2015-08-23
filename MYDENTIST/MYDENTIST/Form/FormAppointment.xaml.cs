@@ -73,6 +73,7 @@ namespace MYDENTIST.Form
                 ((DataGridTextColumn)dgAppo.Columns[2]).Binding = new Binding("tanggal_appo");
                 ((DataGridTextColumn)dgAppo.Columns[2]).Binding.StringFormat = "{0:dd MMMM yyyy}";
                 ((DataGridTextColumn)dgAppo.Columns[3]).Binding = new Binding("jam_appo");
+                ((DataGridTextColumn)dgAppo.Columns[3]).Binding.StringFormat = @"hh\:mm";
                 ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
                 ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
                 ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
@@ -108,6 +109,7 @@ namespace MYDENTIST.Form
                 ((DataGridTextColumn)dgAppo.Columns[2]).Binding = new Binding("tanggal_appo");
                 ((DataGridTextColumn)dgAppo.Columns[2]).Binding.StringFormat = "{0:dd MMMM yyyy}";
                 ((DataGridTextColumn)dgAppo.Columns[3]).Binding = new Binding("jam_appo");
+                ((DataGridTextColumn)dgAppo.Columns[3]).Binding.StringFormat = @"hh\:mm";
                 ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
                 ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
                 ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
@@ -233,6 +235,7 @@ namespace MYDENTIST.Form
             ((DataGridTextColumn)dgAppo.Columns[2]).Binding = new Binding("tanggal_appo");
             ((DataGridTextColumn)dgAppo.Columns[2]).Binding.StringFormat = "{0:dd MMMM yyyy}";
             ((DataGridTextColumn)dgAppo.Columns[3]).Binding = new Binding("jam_appo");
+            ((DataGridTextColumn)dgAppo.Columns[3]).Binding.StringFormat = @"hh\:mm";
             ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
             ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
             ((DataGridTextColumn)dgAppo.Columns[6]).Binding = new Binding("namadokter_appo");
@@ -277,10 +280,10 @@ namespace MYDENTIST.Form
                 koneksi.Commit(true);
 
                 //AddItemCallback();
-
+                koneksi.Dispose();
                 MessageBox.Show("Data status appointment berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                koneksi.Dispose();
+                
 
                 //Warna();
                 //MessageBox.Show(GetIndexKaryawan(row));

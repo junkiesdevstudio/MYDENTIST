@@ -56,7 +56,7 @@ namespace MYDENTIST.Form.PopUp
         private void btnSimpan_Click(object sender, RoutedEventArgs e)
         {
 
-            if (txtNoRM.Text != string.Empty && txtNama.Text != string.Empty && txtAlamat.Text != string.Empty && txtTelp.Text != string.Empty)
+            if (txtNoRM.Text != string.Empty && txtNama.Text != string.Empty && txtAlamat.Text != string.Empty)
             {
                 try
                 {

@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:MYDENTIST.Form"
              mc:Ignorable="d" 
              xml:lang="id-ID" HorizontalAlignment="Stretch" d:DesignWidth="710" Height="570.026" >
 
@@ -17,7 +19,7 @@
         <DataGrid Name="dgTerapi" ItemsSource="{Binding MyDataView}" AutoGenerateColumns="False" Margin="288,21,10,342.026" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" LoadingRow="dgTerapi_LoadingRow" VirtualizingStackPanel.IsVirtualizing="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
-                <DataGridTextColumn Header="No" Binding="{Binding NoKaryawan}" Width="50" IsReadOnly="True" />
+                <DataGridTextColumn Header="No" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConverter}}" Width="50" IsReadOnly="True" />
                 <DataGridTextColumn Header="Nama Terapi" Binding="{Binding NamaTerapi}"  Width="750" IsReadOnly="True" />
                 <DataGridTextColumn Header="Biaya" Binding="{Binding Biaya}"  Width="100" IsReadOnly="True"/>
 
@@ -47,7 +49,7 @@
         <DataGrid x:Name="dgObat" AutoGenerateColumns="False" RowEditEnding="dgObat_RowEditEnding"  VirtualizingStackPanel.IsVirtualizing="False" Margin="288,271,10,107.026" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
-                <DataGridTextColumn Header="No" Binding="{Binding NoKaryawan}" Width="50" IsReadOnly="True" />
+                <DataGridTextColumn Header="No" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConverter}}" Width="50" IsReadOnly="True" />
                 <DataGridTextColumn Header="QTY" Binding="{Binding QTY , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="50" IsReadOnly="False" />
                 <DataGridTextColumn Header="Nama Obat" Binding="{Binding NamaObat}"  Width="500" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Harga Jual" Binding="{Binding Biaya}"  Width="100" IsReadOnly="True" CanUserResize="True"/>
@@ -89,12 +91,28 @@
         <Label Content="Diskon" HorizontalAlignment="Right" Margin="0,531,522,0" VerticalAlignment="Top" Width="57" FontWeight="Bold"/>
         <TextBox x:Name="txtCard" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,499,383,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="134" IsEnabled="True" TextChanged="txtCard_TextChanged"/>
         <Label Content="Card" HorizontalAlignment="Right" Margin="0,501,522,0" VerticalAlignment="Top" Width="57" FontWeight="Bold"/>
-        <DataGrid x:Name="dgPerawat" AutoGenerateColumns="False" VirtualizingPanel.IsVirtualizing="False" Margin="10,271,0,111" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" HorizontalAlignment="Left" >
+        <DataGrid x:Name="dgPerawat" AutoGenerateColumns="False" VirtualizingPanel.IsVirtualizing="False" Margin="10,271,0,111" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" HorizontalAlignment="Left" Width="243" >
             <DataGrid.Columns>
+                
+                
                 <DataGridTextColumn Header="Id" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Nama Perawat" Binding="{Binding NamaPerawat}"  Width="200" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Header="Check" Binding="{Binding Pilih}"  Width="50" IsReadOnly="True" CanUserResize="True"/>
-
+                <DataGridTextColumn Header="Nama Perawat" Binding="{Binding NamaPerawat}"  Width="170" IsReadOnly="True"/>
+                <DataGridTemplateColumn>
+                    
+                    
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="All" x:Name="headerCheckBox"  Click="Status_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox x:Name="chkSelectAll" Margin="45 2 0 0"
+                      IsChecked="{Binding IsChecked, ElementName=headerCheckBox, 
+                                          Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
             </DataGrid.Columns>
             <!--
@@ -105,6 +123,8 @@
             </DataGrid.RowDetailsTemplate>
             -->
         </DataGrid>
+        <TextBox x:Name="txtKWT" HorizontalAlignment="Left" Height="25" Margin="10,32,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="213" RenderTransformOrigin="-4.533,0.962"/>
+        <Label Content="No KWT: " HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold"/>
 
 
 

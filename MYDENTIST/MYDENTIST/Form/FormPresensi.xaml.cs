@@ -158,38 +158,58 @@ namespace MYDENTIST.Form
 
                 v.EndEdit();
 
+                string StandartMasuk1 = "06:30:00";
+                DateTime s1 = DateTime.Parse(StandartMasuk1);
+                string StandartMasuk2 = "4:30:00";
+                DateTime s2 = DateTime.Parse(StandartMasuk2);
 
-                TimeSpan StandartTime1 = TimeSpan.ParseExact(StandardMasuk1, "c", null);
-                TimeSpan StandartTime2 = TimeSpan.ParseExact(StandardMasuk2, "c", null);
-                TimeSpan Pulang1 = TimeSpan.ParseExact((string)v[5].ToString(), "c", null);
-                TimeSpan Masuk1 = TimeSpan.ParseExact((string)v[4].ToString(), "c", null);
-                TimeSpan Pulang2 = TimeSpan.ParseExact((string)v[7].ToString(), "c", null);
-                TimeSpan Masuk2 = TimeSpan.ParseExact((string)v[6].ToString(), "c", null);
-
-                TimeSpan OT = new TimeSpan();
-                TimeSpan LT = new TimeSpan();
+                string Msk1 = (string)v[4].ToString();
+                DateTime m1 = DateTime.Parse(Msk1);
+                string Plg1 = (string)v[5].ToString();
+                DateTime p1 = DateTime.Parse(Plg1);
 
 
-                //Rumus = (Pulang1 - Masuk1) + (Pulang2 - MAsuk2)
-                TimeSpan RumusJumlah = (Pulang1.Subtract(Masuk1).Add(Pulang2.Subtract(Masuk2)));
+                string Msk2 = (string)v[6].ToString();
+                DateTime m2 = DateTime.Parse(Msk2);
+                string Plg2 = (string)v[7].ToString();
+                DateTime p2 = DateTime.Parse(Plg2);
 
-                //Rumus OTLT = ((6.30-(Plg1 - Msk 1)) + (14.30 - (Plg2 - Msk2))
-                //TimeSpan RumusOTLT = (StandartTime1.Subtract(Pulang1.Subtract(Masuk1).Add(StandartTime2.Subtract(Pulang2.Subtract(Masuk2)))));
-                TimeSpan t1 = Pulang1.Subtract(Masuk1);
+                double TotalP1_M1 = (p1.TimeOfDay - m1.TimeOfDay).TotalHours;
+                double TotalP2_M2 = (p2.TimeOfDay - m2.TimeOfDay).TotalHours;
 
-                TimeSpan RumusOTLT = (StandartTime1 - t1);
-                MessageBox.Show(t1.ToString());
+                double total = 0;
+                double jumlah = TotalP1_M1 + TotalP2_M2;
+                TimeSpan LT;// = TimeSpan.FromHours(total);
+                TimeSpan OT;// = TimeSpan.FromHours(total);
+                TimeSpan RumusJumlah = TimeSpan.FromHours(jumlah);
 
-                if (RumusOTLT > TimeSpan.Zero){
-                    //LT = RumusOTLT;
-                    //OT = TimeSpan.Zero;
+                //MessageBox.Show((TotalP2_M2).ToString());
+                if (TotalP2_M2 == 0)
+                {
+                    total = ((s1.TimeOfDay.TotalHours - TotalP1_M1));
+                }
+
+                if (TotalP1_M1 == 0)
+                {
+                    total = ((s2.TimeOfDay.TotalHours - TotalP2_M2));
+                }
+
+                if (TotalP2_M2 != 0 && TotalP1_M1 != 0)
+                {
+                    total = ((s1.TimeOfDay.TotalHours - TotalP1_M1) + (s2.TimeOfDay.TotalHours - TotalP2_M2));
+                }
+
+                if (total >= 0){
+                    LT = TimeSpan.FromHours(total);
+                    OT = TimeSpan.Zero;
                 }
                 else
                 {
-                    //OT = RumusOTLT;
-                    //LT = TimeSpan.Zero;
+                    OT = TimeSpan.FromHours(total);
+                    LT = TimeSpan.Zero;
                 }
 
+                
                 //MessageBox.Show((string)v[4].ToString());
                 koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
                 param = new ParameterData[] { new ParameterData("masuk1_presensi", TimeSpan.ParseExact((string)v[4].ToString(), "c", null)),
@@ -205,10 +225,39 @@ namespace MYDENTIST.Form
                 ShowDataTabel();
 
                 //MessageBox.Show("Data karyawan berhasil diubah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                
                 koneksi.Dispose();
                 v = null;
             }
+        }
+
+        private void txtPencarian_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+            dgTerapi.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_presensi WHERE mydentist.tbl_presensi.nama_presensi LIKE '%" + txtPencarian.Text + "%' ORDER BY id_presensi DESC", null).DefaultView;
+            string format = "hh:mm";
+            ((DataGridTextColumn)dgTerapi.Columns[0]).Binding = new Binding("id_presensi");
+            //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");
+            ((DataGridTextColumn)dgTerapi.Columns[2]).Binding = new Binding("tanggal_presensi");
+            ((DataGridTextColumn)dgTerapi.Columns[2]).Binding.StringFormat = "{0:dddd, MMMM yyyy}";
+            ((DataGridTextColumn)dgTerapi.Columns[3]).Binding = new Binding("nama_presensi");
+
+            ((DataGridTextColumn)dgTerapi.Columns[4]).Binding = new Binding("masuk1_presensi");
+            ((DataGridTextColumn)dgTerapi.Columns[4]).Binding.StringFormat = @"hh\:mm";
+            ((DataGridTextColumn)dgTerapi.Columns[5]).Binding = new Binding("pulang1_presensi");
+            ((DataGridTextColumn)dgTerapi.Columns[5]).Binding.StringFormat = @"hh\:mm";
+            ((DataGridTextColumn)dgTerapi.Columns[6]).Binding = new Binding("masuk2_presensi");
+            ((DataGridTextColumn)dgTerapi.Columns[6]).Binding.StringFormat = @"hh\:mm";
+            ((DataGridTextColumn)dgTerapi.Columns[7]).Binding = new Binding("pulang2_presensi");
+            ((DataGridTextColumn)dgTerapi.Columns[7]).Binding.StringFormat = @"hh\:mm";
+            ((DataGridTextColumn)dgTerapi.Columns[8]).Binding = new Binding("ot_presensi");
+            ((DataGridTextColumn)dgTerapi.Columns[8]).Binding.StringFormat = @"hh\:mm";
+            ((DataGridTextColumn)dgTerapi.Columns[9]).Binding = new Binding("lt_presensi");
+            ((DataGridTextColumn)dgTerapi.Columns[9]).Binding.StringFormat = @"hh\:mm";
+            ((DataGridTextColumn)dgTerapi.Columns[10]).Binding = new Binding("jumlah_presensi");
+            ((DataGridTextColumn)dgTerapi.Columns[10]).Binding.StringFormat = @"hh\:mm";
+            //@Bahar : Harus ditutup !!!
+            koneksi.Dispose();
         }
     }
 }

@@ -164,12 +164,14 @@ namespace MYDENTIST.Form.PopUpData
 
             //@Bahar : melaksanakan fungsi delegate
             AddItemCallback();
+            koneksi.Dispose();
 
+            this.Close();
             MessageBox.Show("Data appointment berhasil ditambah", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
 
             //@Bahar : Penting, habis melakukan koneksi harus ditutup koneksi.Dispose() !!
             //Jika tidak ditutup akan bertabrakan dengan koneksi lain yang aktif, alhasil Not Respond
-            koneksi.Dispose();
+            
         }
 
         void EditUpdate()

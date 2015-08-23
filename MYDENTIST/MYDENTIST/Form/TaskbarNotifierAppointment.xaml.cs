@@ -118,9 +118,9 @@ namespace MYDENTIST.Form
                 dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE mydentist.tbl_appointment.tanggal_appo = CURDATE() AND mydentist.tbl_appointment.status_appo=0", null).DefaultView;
 
                 ((DataGridTextColumn)dgAppo.Columns[0]).Binding = new Binding("id_appo");
-                //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");
-                ((DataGridTextColumn)dgAppo.Columns[2]).Binding = new Binding("tanggal_appo");
-                ((DataGridTextColumn)dgAppo.Columns[2]).Binding.StringFormat = "{0:dd MMMM yyyy}";
+                //((DataGridTextColumn)dgAppo.Columns[1]).Binding = new Binding("id_pasien");
+               ((DataGridTextColumn)dgAppo.Columns[2]).Binding = new Binding("tanggal_appo");
+               ((DataGridTextColumn)dgAppo.Columns[2]).Binding.StringFormat = "{0:dd MMMM yyyy}";
                 ((DataGridTextColumn)dgAppo.Columns[3]).Binding = new Binding("jam_appo");
                 ((DataGridTextColumn)dgAppo.Columns[4]).Binding = new Binding("norm_appo");
                 ((DataGridTextColumn)dgAppo.Columns[5]).Binding = new Binding("namapasien_appo");
@@ -129,7 +129,7 @@ namespace MYDENTIST.Form
 
 
                 //((DataGridCheckBoxColumn)dgAppo.Columns[7]).Binding = new Binding("status_appo") { Converter = new ItemCodeToBoolConverter() };
-                ((DataGridTextColumn)dgAppo.Columns[8]).Binding = new Binding("keterangan_appo");
+                ((DataGridTextColumn)dgAppo.Columns[7]).Binding = new Binding("keterangan_appo");
 
                 //@Bahar : Harus ditutup !!!
                 koneksi.Dispose();
@@ -142,6 +142,7 @@ namespace MYDENTIST.Form
                 dgAppo.ItemsSource = null;
                 //dgAppo.Items.Refresh();
                 koneksi.Dispose();
+                //MessageBox.Show(e.Message);
             }
         }
     }
