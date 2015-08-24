@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                           xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:MYDENTIST.Form"
-             mc:Ignorable="d" HorizontalAlignment="Stretch" d:DesignWidth="710" d:DesignHeight="442.642" >
+             mc:Ignorable="d" HorizontalAlignment="Stretch" d:DesignHeight="442.642"  >
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="../image/background.jpg"/>
@@ -13,11 +13,11 @@
         <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
         <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" TextChanged="txtPencarian_TextChanged"  />
 
-        <DataGrid Name="dgTerapi" VirtualizingStackPanel.IsVirtualizing="False"  AutoGenerateColumns="False" Margin="10,41,10,79" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" CellEditEnding="dgTerapi_CellEditEnding" SelectedCellsChanged="dgTerapi_SelectedCellsChanged" CurrentCellChanged="dgTerapi_CurrentCellChanged" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" >
+        <DataGrid Name="dgTerapi" DataGridCell.GotFocus="DataGrid_CellGotFocus" VirtualizingStackPanel.IsVirtualizing="False"  AutoGenerateColumns="False" Margin="0,41,10,63" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" CellEditEnding="dgTerapi_CellEditEnding" SelectedCellsChanged="dgTerapi_SelectedCellsChanged" CurrentCellChanged="dgTerapi_CurrentCellChanged" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D"  >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdTerapi}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
-                <DataGridTextColumn Header="No" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConverter}}" Width="50" IsReadOnly="True" />
-                <DataGridTextColumn Header="Hari/Tanggal" Binding="{Binding NamaTerapi}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Tanggal" Binding="{Binding Hari}" Width="50" IsReadOnly="True" />
+                <DataGridTextColumn Header="Hari" Binding="{Binding NamaTerapi}"  Width="150" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Nama" Binding="{Binding JenisTerapi}"  Width="250" IsReadOnly="True" CanUserResize="True"/>
                 <DataGridTextColumn Header="Masuk 1" Binding="{Binding Path=NewSourceProperty}"  Width="100" IsReadOnly="False"/>
                 <DataGridTextColumn Header="Pulang 1" Binding="{Binding BiayaTerapi}"  Width="100" IsReadOnly="False"/>
@@ -26,7 +26,7 @@
                 <DataGridTextColumn Header="OT" Binding="{Binding BiayaTerapi}"  Width="100" IsReadOnly="True"/>
                 <DataGridTextColumn Header="LT" Binding="{Binding BiayaTerapi}"  Width="100" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Jumlah" Binding="{Binding BiayaTerapi}"  Width="100" IsReadOnly="True"/>
-                
+
             </DataGrid.Columns>
             <!--
             <DataGrid.RowDetailsTemplate>
@@ -36,8 +36,16 @@
             </DataGrid.RowDetailsTemplate>
             -->
         </DataGrid>
-        <Button x:Name="btn_tambah" Content="Absensi" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambah_Click" >
-        </Button>
+        <ComboBox x:Name="cmbTahun" HorizontalAlignment="Left" Margin="354,10,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="cmbTahun_SelectionChanged"/>
+        <Label Content="Tahun" HorizontalAlignment="Left" Margin="299,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <ComboBox x:Name="cmbBulan" HorizontalAlignment="Left" Margin="534,10,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="cmbBulan_SelectionChanged"/>
+        <Label Content="Bulan" HorizontalAlignment="Left" Margin="479,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <ComboBox x:Name="cmbKaryawan" HorizontalAlignment="Left" Margin="739,12,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="cmbKaryawan_SelectionChanged"/>
+        <Label Content="Karyawan" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <TextBox x:Name="totalJumlah" HorizontalAlignment="Right" Height="25" Margin="0,407,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="89"/>
+        <Label Content="Total : " HorizontalAlignment="Right" Margin="0,408,104,0" VerticalAlignment="Top" Width="40"/>
+        <TextBox x:Name="totalLT" HorizontalAlignment="Right" Height="25" Margin="0,406,149,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="82"/>
+        <Label Content="LT  : " HorizontalAlignment="Right" Margin="0,408,236,0" VerticalAlignment="Top" Width="40" RenderTransformOrigin="0.417,0.413"/>
 
 
     </Grid>

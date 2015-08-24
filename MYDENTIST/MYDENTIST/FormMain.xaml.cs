@@ -72,7 +72,7 @@ namespace MYDENTIST
             if (CmbxDataTanggal.Rows.Count != 0)
             {
                 for(int x=0;x<CmbxDataTanggal.Rows.Count ;x++){
-                    if (DateTime.Parse(CmbxDataTanggal.Rows[x]["tanggal_appo"].ToString()) == DateTime.Now.Date)
+                    if (DateTime.Parse(CmbxDataTanggal.Rows[x]["tanggal_appo"].ToString()) == DateTime.Now.Date && CmbxDataTanggal.Rows[x]["status_appo"].ToString() != "1")
                     {
                         if (!this.taskbarNotifier.Activate())
                         {

@@ -55,17 +55,23 @@ namespace MYDENTIST.Form.PopUp
 
         private void btnSimpan_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (txtNama.Text != string.Empty)
             {
-                if (!isEdit) SimpanNew();
-                else EditUpdate();
+                try
+                {
+                    if (!isEdit) SimpanNew();
+                    else EditUpdate();
 
-            }
-            catch (Exception ex)
-            {
+                }
+                catch (Exception ex)
+                {
 
-                MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Terjadi kesalahan!", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }else{
+                MessageBox.Show("Mohon data field nama diisi !", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            
         }
 
         private void btnBatal_Click(object sender, RoutedEventArgs e)

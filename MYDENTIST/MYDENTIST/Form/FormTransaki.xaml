@@ -46,7 +46,7 @@
         <TextBox x:Name="txtNamaPasien" HorizontalAlignment="Left" Height="23" Margin="10,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="213" IsReadOnly="True"/>
         <Button x:Name="btnCari" Content="Cari" HorizontalAlignment="Left" Margin="228,134,0,0" VerticalAlignment="Top" Width="34" Click="btnCari_Click"/>
         <ComboBox x:Name="cmbNamaDokter" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="213"/>
-        <DataGrid x:Name="dgObat" AutoGenerateColumns="False" RowEditEnding="dgObat_RowEditEnding"  VirtualizingStackPanel.IsVirtualizing="False" Margin="288,271,10,107.026" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" >
+        <DataGrid x:Name="dgObat" AutoGenerateColumns="False" RowEditEnding="dgObat_RowEditEnding"  VirtualizingStackPanel.IsVirtualizing="False" Margin="288,271,10,123" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn Header="No" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConverter}}" Width="50" IsReadOnly="True" />
@@ -74,32 +74,32 @@
             </DataGrid.RowDetailsTemplate>
             -->
         </DataGrid>
-        <Button x:Name="btn_tambahObat" Content="Tambah Obat" HorizontalAlignment="Right" Margin="0,0,10,69.026" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambahObat_Click"/>
-        <Button x:Name="btn_tambah" Content="Simpan" HorizontalAlignment="Right" Margin="0,0,10,10.181" VerticalAlignment="Bottom" Width="134" Height="33"/>
+        <Button x:Name="btn_tambahObat" Content="Tambah Obat" HorizontalAlignment="Right" Margin="0,0,10,89" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambahObat_Click"/>
+        <Button x:Name="btn_tambah" Content="Simpan" HorizontalAlignment="Right" Margin="0,0,10,10.181" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambah_Click"/>
         <Button x:Name="btn_tambahTerapi" Content="Tambah Terapi" HorizontalAlignment="Right" Margin="0,0,10,304.026" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambahTerapi_Click"/>
         <TextBox x:Name="txtTotalTerapi" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,237,149,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="134" IsEnabled="False" TextChanged="txtTotalTerapi_TextChanged"/>
-        <TextBox x:Name="txtTotalObat" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,468,149,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="134" IsEnabled="False" TextChanged="txtTotalObat_TextChanged"/>
+        <TextBox x:Name="txtTotalObat" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,448,149,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="134" IsEnabled="False" TextChanged="txtTotalObat_TextChanged"/>
         <Label Content="Tanggal : " HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold"/>
         <Label Content="No RM : " HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold"/>
         <Label Content="Nama Pasien : " HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="90" FontWeight="Bold"/>
         <Label Content="Nama Dokter : " HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" Width="90" FontWeight="Bold"/>
         <Label Content="Total Terapi : " HorizontalAlignment="Right" Margin="0,237,288,0" VerticalAlignment="Top" Width="90" FontWeight="Bold"/>
-        <Label Content="Total Obat" HorizontalAlignment="Right" Margin="0,472,288,0" VerticalAlignment="Top" Width="90" FontWeight="Bold"/>
+        <Label Content="Total Obat" HorizontalAlignment="Right" Margin="0,452,288,0" VerticalAlignment="Top" Width="90" FontWeight="Bold"/>
         <TextBox x:Name="txtGrandTotal" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,531,149,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="134" IsEnabled="False" TextChanged="txtGrandTotal_TextChanged" />
         <Label Content="GRAND TOTAL" HorizontalAlignment="Right" Margin="0,531,288,0" VerticalAlignment="Top" Width="90" FontWeight="Bold"/>
-        <TextBox x:Name="txtDiskon" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,531,383,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="134" IsEnabled="True" TextChanged="txtDiskon_TextChanged"/>
+        <TextBox x:Name="txtDiskon" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,531,406,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="111" IsEnabled="True" TextChanged="txtDiskon_TextChanged"/>
         <Label Content="Diskon" HorizontalAlignment="Right" Margin="0,531,522,0" VerticalAlignment="Top" Width="57" FontWeight="Bold"/>
-        <TextBox x:Name="txtCard" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,499,383,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="134" IsEnabled="True" TextChanged="txtCard_TextChanged"/>
+        <TextBox x:Name="txtCard" FontWeight="Bold" HorizontalAlignment="Right" Height="23" Margin="0,499,406,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="111" IsEnabled="True" TextChanged="txtCard_TextChanged"/>
         <Label Content="Card" HorizontalAlignment="Right" Margin="0,501,522,0" VerticalAlignment="Top" Width="57" FontWeight="Bold"/>
         <DataGrid x:Name="dgPerawat" AutoGenerateColumns="False" VirtualizingPanel.IsVirtualizing="False" Margin="10,271,0,111" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" HorizontalAlignment="Left" Width="243" >
             <DataGrid.Columns>
-                
-                
+
+
                 <DataGridTextColumn Header="Id" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn Header="Nama Perawat" Binding="{Binding NamaPerawat}"  Width="170" IsReadOnly="True"/>
                 <DataGridTemplateColumn>
-                    
-                    
+
+
                     <DataGridTemplateColumn.HeaderTemplate>
                         <DataTemplate>
                             <CheckBox Content="All" x:Name="headerCheckBox"  Click="Status_Click"/>
@@ -125,6 +125,9 @@
         </DataGrid>
         <TextBox x:Name="txtKWT" HorizontalAlignment="Left" Height="25" Margin="10,32,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="213" RenderTransformOrigin="-4.533,0.962"/>
         <Label Content="No KWT: " HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Width="70" FontWeight="Bold"/>
+        <Button x:Name="btnBatal" Content="Batal" HorizontalAlignment="Right" Margin="0,486,10,0" VerticalAlignment="Top" Width="134"  Height="36" Click="btnBatal_Click"/>
+        <Label Content="%" HorizontalAlignment="Right" Margin="0,500,387,0" VerticalAlignment="Top" Width="19" FontWeight="Bold"/>
+        <Label Content="%" HorizontalAlignment="Right" Margin="0,532,387,0" VerticalAlignment="Top" Width="19" FontWeight="Bold"/>
 
 
 

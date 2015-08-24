@@ -4,6 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:MYDENTIST.Form"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Background="#FF7E7E7E">
     <tn:TaskbarNotifier.Resources>
@@ -87,10 +89,10 @@
                     </Path>
 
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <DataGrid Name="dgAppo" AutoGenerateColumns="False" Margin="10,41,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" >
+                        <DataGrid Name="dgAppo" VirtualizingStackPanel.IsVirtualizing="False" AutoGenerateColumns="False" Margin="10,41,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" Binding="{Binding IdTerapi}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
-                                <DataGridTextColumn Header="No" Binding="{Binding NoTerapi}" Width="50" IsReadOnly="True" />
+                                <DataGridTextColumn Header="No" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConverter}}" Width="50" IsReadOnly="True" />
                                 <DataGridTextColumn Header="Hari/Tanggal" Binding="{Binding NamaTerapi}"  Width="150" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="Jam" Binding="{Binding JenisTerapi}"  Width="100" IsReadOnly="True" CanUserResize="True"/>
                                 <DataGridTextColumn Header="No RM" Binding="{Binding BiayaTerapi}"  Width="100" IsReadOnly="True"/>

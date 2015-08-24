@@ -220,7 +220,10 @@ namespace MYDENTIST.Form.PopUpData
 
         private void txtJam_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (txtJam.Text == string.Empty)
+            {
+                txtJam.Text = "00:00";
+            }
         }
 
         

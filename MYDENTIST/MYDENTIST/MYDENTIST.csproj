@@ -139,6 +139,9 @@
     <Compile Include="Form\FormPresensi.xaml.cs">
       <DependentUpon>FormPresensi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Form\FormRekapTerapi.xaml.cs">
+      <DependentUpon>FormRekapTerapi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Form\FormTerapi.xaml.cs">
       <DependentUpon>FormTerapi.xaml</DependentUpon>
     </Compile>
@@ -229,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Form\FormPresensi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\FormRekapTerapi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

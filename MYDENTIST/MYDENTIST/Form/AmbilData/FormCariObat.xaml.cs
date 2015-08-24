@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 
 namespace MYDENTIST.Form.AmbilData
 {
-    public delegate void AddItemDelegateAmbilDataObat(int persen, string nama, int biaya);
+    public delegate void AddItemDelegateAmbilDataObat(int id, int persen, string nama, int biaya);
     public partial class FormCariObat : Window
     {
         public AddItemDelegateAmbilDataObat AddItemCallbackObat;
@@ -63,11 +63,14 @@ namespace MYDENTIST.Form.AmbilData
             if (result == MessageBoxResult.Yes)
             {
                 DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
+                int id = (int)v[0];
                 int persen = (int)v[0];
                 string nama = (string)v[1].ToString();
                 int biaya = (int)v[4];
 
-                AddItemCallbackObat(persen, nama, biaya);
+               // MessageBox.Show((string)v[0].ToString());
+
+                AddItemCallbackObat(id, persen, nama, biaya);
                 this.Close();
             }
 

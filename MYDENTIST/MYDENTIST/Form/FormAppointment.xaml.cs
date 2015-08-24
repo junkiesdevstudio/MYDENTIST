@@ -66,7 +66,7 @@ namespace MYDENTIST.Form
             try
             {
                 koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
-                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE MONTH(mydentist.tbl_appointment.tanggal_appo) = " + (cmbBulan.SelectedIndex + 1) + " AND YEAR(mydentist.tbl_appointment.tanggal_appo) =" + cmbTahun.SelectedItem.ToString() + " ORDER BY CAST(mydentist.tbl_appointment.tanggal_appo as datetime) ASC", null).DefaultView;
+                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE MONTH(mydentist.tbl_appointment.tanggal_appo) = " + (cmbBulan.SelectedIndex + 1) + " AND YEAR(mydentist.tbl_appointment.tanggal_appo) =" + cmbTahun.SelectedItem.ToString() + " ORDER BY CAST(mydentist.tbl_appointment.tanggal_appo as datetime),CAST(mydentist.tbl_appointment.jam_appo as time) ASC", null).DefaultView;
 
                 ((DataGridTextColumn)dgAppo.Columns[0]).Binding = new Binding("id_appo");
                 //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");
@@ -102,7 +102,7 @@ namespace MYDENTIST.Form
             try
             {
                 koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
-                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE MONTH(mydentist.tbl_appointment.tanggal_appo) = " + bulan + " AND YEAR(mydentist.tbl_appointment.tanggal_appo) =" + tahun + " ORDER BY CAST(mydentist.tbl_appointment.tanggal_appo as datetime) ASC", null).DefaultView;
+                dgAppo.ItemsSource = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE MONTH(mydentist.tbl_appointment.tanggal_appo) = " + bulan + " AND YEAR(mydentist.tbl_appointment.tanggal_appo) =" + tahun + " ORDER BY CAST(mydentist.tbl_appointment.tanggal_appo as datetime), CAST(mydentist.tbl_appointment.jam_appo as time) ASC", null).DefaultView;
 
                 ((DataGridTextColumn)dgAppo.Columns[0]).Binding = new Binding("id_appo");
                 //((DataGridTextColumn)dgUsers.Columns[1]).Binding = new Binding("id_pasien");

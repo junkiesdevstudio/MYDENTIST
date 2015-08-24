@@ -58,7 +58,6 @@ namespace MYDENTIST.Form.PopUp
             btnSimpan.Content = "Update";
             txtID.Text = IdObat;
 
-            
             FetchEditData();
 
         }
@@ -160,17 +159,28 @@ namespace MYDENTIST.Form.PopUp
 
         void FetchEditData()
         {
-            DataTable Datatable = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_obat WHERE mydentist.tbl_obat.id_obat = " + txtID.Text, null);
-            foreach (DataRow row in Datatable.Rows)
+            try
             {
-                //MessageBox.Show(row["nama_karyawan"].ToString());
-                txtNama.Text = row["nama_obat"].ToString();
-                cmbJenis.SelectedItem = row["jenis_obat"].ToString();
-                txtHargaBeli.Text = row["hargabeli_obat"].ToString();  
-                txtHargaJual.Text = row["hargajual_obat"].ToString();
-                txtStok.Text = row["stok_obat"].ToString(); 
-                txtKeterangan.Text = row["keterangan_obat"].ToString();
+                koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+                DataTable Datatable = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_obat WHERE mydentist.tbl_obat.id_obat =" + txtID.Text, null);
+                foreach (DataRow row in Datatable.Rows)
+                {
+                    //MessageBox.Show(row["nama_karyawan"].ToString());
+                    txtNama.Text = row["nama_obat"].ToString();
+                    cmbJenis.SelectedItem = row["jenis_obat"].ToString();
+                    txtHargaBeli.Text = row["hargabeli_obat"].ToString();
+                    txtHargaJual.Text = row["hargajual_obat"].ToString();
+                    txtStok.Text = row["stok_obat"].ToString();
+                    txtKeterangan.Text = row["keterangan_obat"].ToString();
+                }
+
+                koneksi.Dispose();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         void SimpanNew()
