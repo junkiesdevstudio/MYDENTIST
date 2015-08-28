@@ -64,7 +64,11 @@
             </RibbonTab>
             <RibbonTab x:Name="TABREKAP" Header="REKAP" KeyTip="H" >
                 <RibbonGroup x:Name="REKAP" Header="REKAP">
-                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="APPOINTMENT" KeyTip="C" Width="65" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="TERAPI" KeyTip="C" Width="65" Click="btnRekapTerapi_Click"/>
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="OBAT" KeyTip="C" Width="65" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="INKASO" KeyTip="C" Width="65" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="BELANJA" KeyTip="C" Width="65" />
+                    <RibbonButton LargeImageSource="Image/icon/icon_appointment.png" Label="HARIAN" KeyTip="C" Width="65" />
                 </RibbonGroup>
             </RibbonTab>
             <RibbonTab x:Name="TABLAPORAN" Header="LAPORAN" KeyTip="H" >

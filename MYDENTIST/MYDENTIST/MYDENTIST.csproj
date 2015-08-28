@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.5.4\Assemblies\v4.0\MySql.Data.dll</HintPath>
@@ -166,6 +169,7 @@
     <Compile Include="Form\PopUp\PopUpTerapi.xaml.cs">
       <DependentUpon>PopUpTerapi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Form\RowToIndexConverter.cs" />
     <Compile Include="Form\TaskbarNotifierAppointment.xaml.cs">
       <DependentUpon>TaskbarNotifierAppointment.xaml</DependentUpon>
     </Compile>

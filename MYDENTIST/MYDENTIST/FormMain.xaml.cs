@@ -126,7 +126,12 @@ namespace MYDENTIST
             FormTerapi inputGrid = new FormTerapi();
             UIPanel.Children.Add(inputGrid);
         }
-
+        private void btnRekapTerapi_Click(object sender, RoutedEventArgs e)
+        {
+            UIPanel.Children.Clear();
+            FormRekapTerapi inputGrid = new FormRekapTerapi();
+            UIPanel.Children.Add(inputGrid);
+        }
         private void btnAppointment_Click(object sender, RoutedEventArgs e)
         {
             UIPanel.Children.Clear();

@@ -1,10 +1,11 @@
-﻿<UserControl x:Class="MYDENTIST.Form.FormRekapTerapi"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:MYDENTIST.Form"
+             xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" x:Class="MYDENTIST.Form.FormRekapTerapi"
              mc:Ignorable="d" 
              xml:lang="id-ID"
              d:DesignHeight="300" HorizontalAlignment="Stretch" d:DesignWidth="710" >
@@ -16,29 +17,29 @@
         </Grid.Background>
 
         <Label Content="Pencarian : " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
-        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" />
+        <TextBox x:Name="txtPencarian" HorizontalAlignment="Left" Height="23" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" TextChanged="txtPencarian_TextChanged" />
 
-        <DataGrid Name="dgRekapTerapi" AutoGenerateColumns="False" Margin="10,41,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" VirtualizingStackPanel.IsVirtualizing="False">
+        <DataGrid x:Name="dgRekapTerapi" AutoGenerateColumns="False" Margin="10,41,10,48" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" VirtualizingPanel.IsVirtualizing="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn Header="No" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConverter}}" Width="50" IsReadOnly="True" />
-                <DataGridTextColumn Header="KJ" Binding="{Binding NamaKaryawan}"  Width="100" IsReadOnly="True" />
-                <DataGridTextColumn Header="No.KWT" Binding="{Binding JenisKaryawan}"  Width="100" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Tanggal" Binding="{Binding AlamatKaryawan}"  Width="100" IsReadOnly="True" CanUserResize="True"/>
-                <DataGridTextColumn Header="No.RM" Binding="{Binding Telp}"  Width="100" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Nama Pasien" Binding="{Binding Tanggal_Masuk }"  Width="150" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="250" IsReadOnly="True"/>
-                <DataGridTemplateColumn Header="Aksi" Width="140">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="Ubah" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" />
-                                <Button Content="Hapus" Tag="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}}" Width="70" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="KJ" Binding="{Binding KJ}"  Width="100" IsReadOnly="True" />
+                <DataGridTextColumn Header="No.KWT" Binding="{Binding NoKWT}"  Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Tanggal" Binding="{Binding Tanggal}"  Width="100" IsReadOnly="True" CanUserResize="True"/>
+                <DataGridTextColumn Header="No.RM" Binding="{Binding NoRM}"  Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nama Pasien" Binding="{Binding NamaPasien}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nama Terapi" Binding="{Binding NamaTerapi}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Jenis" Binding="{Binding Jenis}"  Width="60" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Biaya" Binding="{Binding Biaya}"  Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Diskon" Binding="{Binding Diskon}"  Width="60" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Card" Binding="{Binding Card}"  Width="60" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Total" Binding="{Binding Total}"  Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nama Dokter" Binding="{Binding NamaDokter}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nama Perawat" Binding="{Binding NamaPerawat}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Keterangan" Binding="{Binding Keterangan}"  Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Biaya Bahan" Binding="{Binding BiayaBahan}"  Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="MY" Binding="{Binding MY}"  Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Hasil Dokter" Binding="{Binding HasilDokter}"  Width="100" IsReadOnly="True"/>
             </DataGrid.Columns>
             <!--
             <DataGrid.RowDetailsTemplate>
@@ -48,7 +49,11 @@
             </DataGrid.RowDetailsTemplate>
             -->
         </DataGrid>
-        <Button x:Name="btn_tambah" Content="Tambah Karyawan" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" />
+        <Button x:Name="btn_tambah" Content="Export Excel" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" Height="33" Click="btn_tambah_Click" />
+        <ComboBox x:Name="cmbTahun" HorizontalAlignment="Left" Margin="354,10,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="cmbTahun_SelectionChanged"/>
+        <ComboBox x:Name="cmbBulan" HorizontalAlignment="Left" Margin="545,8,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="cmbBulan_SelectionChanged"/>
+        <Label Content="Tahun" HorizontalAlignment="Left" Margin="299,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+        <Label Content="Bulan" HorizontalAlignment="Left" Margin="494,8,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
 
 
 

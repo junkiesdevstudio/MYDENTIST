@@ -94,7 +94,7 @@ namespace MYDENTIST.Form
             //cmbNamaDokter..valu = "nama_karyawan";
 
             //List<string> studentList = new List<string>();
-            cmbKaryawan.Items.Add("Semua");
+            //cmbKaryawan.Items.Add("Semua");
             for (int i = 0; i < CmbxData.Rows.Count; i++)
             {
                 cmbKaryawan.Items.Add(CmbxData.Rows[i]["nama_karyawan"].ToString());

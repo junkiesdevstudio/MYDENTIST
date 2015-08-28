@@ -87,7 +87,7 @@ namespace MYDENTIST.Form
         }
 
         int xNomor;
-        private void AddItemCallbackAmbilDataTerapi(string persen, string nama, int biaya)
+        private void AddItemCallbackAmbilDataTerapi(string persen, string nama, double biaya)
         {
             /*
             DataTable dt = new DataTable();
@@ -101,7 +101,7 @@ namespace MYDENTIST.Form
             dt.ImportRow(newRow);
             dgTerapi.ItemsSource = dt.DefaultView;
              * */
-            int TotalTerapi = 0;
+            double TotalTerapi = 0;
             dgTerapi.Items.Add(new DataTerapi { NamaTerapi = nama, Biaya = biaya  });
             dgTerapi.UpdateLayout();
             for (int x = 0; x < dgTerapi.Items.Count;x++ )
@@ -231,7 +231,7 @@ namespace MYDENTIST.Form
                 var button = (FrameworkElement)sender;
                 var row = (DataGridRow)button.Tag;
                 dgTerapi.Items.RemoveAt(row.GetIndex());
-                int TotalTerapi = 0;
+                double TotalTerapi = 0;
                 dgTerapi.UpdateLayout();
                 for (int x = 0; x < dgTerapi.Items.Count; x++)
                 {
@@ -302,7 +302,7 @@ namespace MYDENTIST.Form
         {
             public int No { set; get; }
             public string NamaTerapi { set; get; }
-            public int Biaya { set; get; }
+            public double Biaya { set; get; }
         }
 
         public class DataObat : INotifyPropertyChanged
@@ -623,7 +623,7 @@ namespace MYDENTIST.Form
                                           new ParameterData("namadokter_rekapterapi", cmbNamaDokter.Text),
                                           new ParameterData("qty_rekapterapi", 1),
                                           new ParameterData("card_rekapterapi", txtCard.Text),
-                                          new ParameterData("diskon_rekapterapi", txtCard.Text),
+                                          new ParameterData("diskon_rekapterapi", txtDiskon.Text),
                                           new ParameterData("total_rekapterapi", totalRekap),
                                           new ParameterData("grandtotal_rekapterapi", grandTotal)};
 

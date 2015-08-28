@@ -73,6 +73,8 @@ namespace MYDENTIST.Form.PopUpData
             {
                 //MessageBox.Show(row["nama_karyawan"].ToString());
                 IDPasien = row["id_pasien"].ToString();
+                DateTime t = DateTime.Parse(row["jam_appo"].ToString());
+                txtJam.Text = string.Format("{0:hh:mm}", t);
                 status = row["status_appo"].ToString();
                 datePick.Text = row["tanggal_appo"].ToString();
                 txtNoRm.Text = row["norm_appo"].ToString();

@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 
 namespace MYDENTIST.Form.AmbilData
 {
-    public delegate void AddItemDelegateAmbilDataTerapi(string persen, string nama, int biaya);
+    public delegate void AddItemDelegateAmbilDataTerapi(string persen, string nama, double biaya);
     public partial class FormCariTerapi : Window
     {
         public AddItemDelegateAmbilDataTerapi AddItemCallbackTerapi;
@@ -62,7 +62,7 @@ namespace MYDENTIST.Form.AmbilData
                 DataRowView v = (DataRowView)dgTerapi.Items[row.GetIndex()];
                 string persen = (string)v[0].ToString();
                 string nama = (string)v[1].ToString();
-                int biaya = (int)v[3];
+                double biaya = (double)v[3];
 
                 AddItemCallbackTerapi(persen, nama, biaya);
                 this.Close();
