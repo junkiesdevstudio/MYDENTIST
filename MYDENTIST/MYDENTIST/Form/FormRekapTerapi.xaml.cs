@@ -106,10 +106,13 @@ namespace MYDENTIST.Form
                     }
                 }
 
+                DateTime dt = DateTime.Parse(CmbxData.Rows[i]["tanggal_rekapterapi"].ToString());
+                string format = "dd MMMM yyyy";
+
                 rekapTerapi.Add(new RekapTerapi { 
                                                   KJ = kj,
-                                                  NoKWT = CmbxData.Rows[i]["nokwt_rekapterapi"].ToString(), 
-                                                  Tanggal = CmbxData.Rows[i]["tanggal_rekapterapi"].ToString(),
+                                                  NoKWT = CmbxData.Rows[i]["nokwt_rekapterapi"].ToString(),
+                                                  Tanggal = dt.ToString(format),
                                                   NoRM = CmbxData.Rows[i]["nokwt_rekapterapi"].ToString(),
                                                   NamaPasien = CmbxData.Rows[i]["namapasien_rekapterapi"].ToString(),
                                                   NamaTerapi = CmbxData.Rows[i]["namaterapi_rekapterapi"].ToString(),
@@ -148,7 +151,7 @@ namespace MYDENTIST.Form
             {
                 ShowDataTabelFilter(cmbTahun.SelectedItem.ToString(), (cmbBulan.SelectedIndex + 1).ToString());
             }
-        }
+        } 
 
         private void cmbBulan_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -192,11 +195,14 @@ namespace MYDENTIST.Form
                         }
                     }
 
+                    DateTime dt = DateTime.Parse(CmbxData.Rows[i]["tanggal_rekapterapi"].ToString());
+                    string format = "dd MMMM yyyy";
+
                     rekapTerapi.Add(new RekapTerapi
                     {
                         KJ = kj,
                         NoKWT = CmbxData.Rows[i]["nokwt_rekapterapi"].ToString(),
-                        Tanggal = CmbxData.Rows[i]["tanggal_rekapterapi"].ToString(),
+                        Tanggal = dt.ToString(format),
                         NoRM = CmbxData.Rows[i]["nokwt_rekapterapi"].ToString(),
                         NamaPasien = CmbxData.Rows[i]["namapasien_rekapterapi"].ToString(),
                         NamaTerapi = CmbxData.Rows[i]["namaterapi_rekapterapi"].ToString(),
@@ -245,7 +251,7 @@ namespace MYDENTIST.Form
                 DataTable CmbxData = new DataTable();
                 koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
 
-                CmbxData = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_terapi RIGHT JOIN mydentist.tbl_rekapterapi ON mydentist.tbl_terapi.nama_terapi=mydentist.tbl_rekapterapi.namaterapi_rekapterapi WHERE (MONTH(mydentist.tbl_rekapterapi.tanggal_rekapterapi) = " + (cmbBulan.SelectedIndex + 1) + " AND YEAR(mydentist.tbl_rekapterapi.tanggal_rekapterapi) =" + cmbTahun.SelectedItem.ToString() + ") AND (mydentist.tbl_rekapterapi.namaterapi_rekapterapi LIKE %'"+ txtPencarian.Text +"'%)", null);
+                CmbxData = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_terapi RIGHT JOIN mydentist.tbl_rekapterapi ON mydentist.tbl_terapi.nama_terapi=mydentist.tbl_rekapterapi.namaterapi_rekapterapi WHERE (MONTH(mydentist.tbl_rekapterapi.tanggal_rekapterapi) = " + (cmbBulan.SelectedIndex + 1) + " AND YEAR(mydentist.tbl_rekapterapi.tanggal_rekapterapi) =" + cmbTahun.SelectedItem.ToString() + ") AND (mydentist.tbl_rekapterapi.namaterapi_rekapterapi LIKE '%"+ txtPencarian.Text +"%')", null);
 
                 DataTable CmbxDataPerawat = new DataTable();
 
@@ -269,13 +275,14 @@ namespace MYDENTIST.Form
                     }
 
 
-
+                    DateTime dt = DateTime.Parse(CmbxData.Rows[i]["tanggal_rekapterapi"].ToString());
+                    string format = "dd MMMM yyyy";
 
                     rekapTerapi.Add(new RekapTerapi
                     {
                         KJ = kj,
                         NoKWT = CmbxData.Rows[i]["nokwt_rekapterapi"].ToString(),
-                        Tanggal = CmbxData.Rows[i]["tanggal_rekapterapi"].ToString(),
+                        Tanggal = dt.ToString(format),
                         NoRM = CmbxData.Rows[i]["nokwt_rekapterapi"].ToString(),
                         NamaPasien = CmbxData.Rows[i]["namapasien_rekapterapi"].ToString(),
                         NamaTerapi = CmbxData.Rows[i]["namaterapi_rekapterapi"].ToString(),

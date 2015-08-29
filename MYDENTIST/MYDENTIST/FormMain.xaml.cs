@@ -213,5 +213,20 @@ namespace MYDENTIST
             FormTransaki inputGrid = new FormTransaki();
             UIPanel.Children.Add(inputGrid);
         }
+
+
+        private void btnRekapObat_Click(object sender, RoutedEventArgs e)
+        {
+            UIPanel.Children.Clear();
+            FormRekapObat inputGrid = new FormRekapObat();
+            UIPanel.Children.Add(inputGrid);
+        }
+
+        private void btnRekapInkaso_Click(object sender, RoutedEventArgs e)
+        {
+            UIPanel.Children.Clear();
+            FormRekapInkaso inputGrid = new FormRekapInkaso();
+            UIPanel.Children.Add(inputGrid);
+        }
     }
 }

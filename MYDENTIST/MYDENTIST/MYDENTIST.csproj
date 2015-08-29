@@ -142,6 +142,12 @@
     <Compile Include="Form\FormPresensi.xaml.cs">
       <DependentUpon>FormPresensi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Form\FormRekapInkaso.xaml.cs">
+      <DependentUpon>FormRekapInkaso.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormRekapObat.xaml.cs">
+      <DependentUpon>FormRekapObat.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Form\FormRekapTerapi.xaml.cs">
       <DependentUpon>FormRekapTerapi.xaml</DependentUpon>
     </Compile>
@@ -153,6 +159,9 @@
     </Compile>
     <Compile Include="Form\PopUpData\PopUpDataAppointment.xaml.cs">
       <DependentUpon>PopUpDataAppointment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\PopUpData\PopUpDataInkaso.xaml.cs">
+      <DependentUpon>PopUpDataInkaso.xaml</DependentUpon>
     </Compile>
     <Compile Include="Form\PopUp\PopUpAbsensi.xaml.cs">
       <DependentUpon>PopUpAbsensi.xaml</DependentUpon>
@@ -239,6 +248,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Form\FormRekapInkaso.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\FormRekapObat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Form\FormRekapTerapi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -252,6 +269,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Form\PopUpData\PopUpDataAppointment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\PopUpData\PopUpDataInkaso.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

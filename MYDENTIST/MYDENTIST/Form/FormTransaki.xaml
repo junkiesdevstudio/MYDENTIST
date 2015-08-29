@@ -46,7 +46,7 @@
         <TextBox x:Name="txtNamaPasien" HorizontalAlignment="Left" Height="23" Margin="10,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="213" IsReadOnly="True"/>
         <Button x:Name="btnCari" Content="Cari" HorizontalAlignment="Left" Margin="228,134,0,0" VerticalAlignment="Top" Width="34" Click="btnCari_Click"/>
         <ComboBox x:Name="cmbNamaDokter" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="213"/>
-        <DataGrid x:Name="dgObat" AutoGenerateColumns="False" RowEditEnding="dgObat_RowEditEnding"  VirtualizingStackPanel.IsVirtualizing="False" Margin="288,271,10,123" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" >
+        <DataGrid x:Name="dgObat" AutoGenerateColumns="False" RowEditEnding="dgObat_RowEditEnding"  VirtualizingStackPanel.IsVirtualizing="False" Margin="288,271,10,123" CanUserResizeColumns="False" ColumnHeaderHeight="30" CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FF8D8D8D" BeginningEdit="dgObat_BeginningEdit" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdKaryawan}" Width="50" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn Header="No" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConverter}}" Width="50" IsReadOnly="True" />

@@ -18,16 +18,18 @@ using System.Windows.Shapes;
 namespace MYDENTIST.Form.AmbilData
 {
     public delegate void AddItemDelegateAmbilDataObat(int id, int persen, string nama, int biaya);
+    public delegate void AddItemDelegateAmbilDataObatHargaBeli(int id, string nama, int biayabeli);
     public partial class FormCariObat : Window
     {
         public AddItemDelegateAmbilDataObat AddItemCallbackObat;
+        public AddItemDelegateAmbilDataObatHargaBeli AddItemCallbackObatBeli;
         private cds_MYSQLKonektor koneksi;
+        private bool isInkaso;
 
-
-        public FormCariObat()
+        public FormCariObat(bool inkaso = false)
         {
             InitializeComponent();
-
+            isInkaso = inkaso;
             ShowDataTabel();
         }
 
@@ -58,20 +60,54 @@ namespace MYDENTIST.Form.AmbilData
             var button = (FrameworkElement)sender;
             var row = (DataGridRow)button.Tag;
 
-            MessageBoxResult result = MessageBox.Show("Ambil Data Obat?", "Konfirmasi", MessageBoxButton.YesNo);
 
-            if (result == MessageBoxResult.Yes)
+            if (isInkaso)
             {
-                DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
-                int id = (int)v[0];
-                int persen = (int)v[0];
-                string nama = (string)v[1].ToString();
-                int biaya = (int)v[4];
+                MessageBoxResult result = MessageBox.Show("Ambil Data Obat?", "Konfirmasi", MessageBoxButton.YesNo);
 
-               // MessageBox.Show((string)v[0].ToString());
+                if (result == MessageBoxResult.Yes)
+                {
+                    DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
+                    int id = (int)v[0];
+                    string nama = (string)v[1].ToString();
+                    int biaya = (int)v[3];
 
-                AddItemCallbackObat(id, persen, nama, biaya);
-                this.Close();
+                    // MessageBox.Show((string)v[0].ToString());
+
+                    AddItemCallbackObatBeli(id, nama, biaya);
+                    this.Close();
+                }
+            }
+            else
+            {
+
+                DataRowView vCheck = (DataRowView)dgObat.Items[row.GetIndex()];
+
+                if ((int)vCheck[5] <= 0)
+                {
+                    MessageBox.Show("Maaf Stock Habis !!");
+                }
+                else
+                {
+
+                    MessageBoxResult result = MessageBox.Show("Ambil Data Obat?", "Konfirmasi", MessageBoxButton.YesNo);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
+                        int id = (int)v[0];
+                        int persen = (int)v[0];
+                        string nama = (string)v[1].ToString();
+                        int biaya = (int)v[4];
+
+                        // MessageBox.Show((string)v[0].ToString());
+
+                        AddItemCallbackObat(id, persen, nama, biaya);
+                        this.Close();
+                    }
+
+                }
+
             }
 
         }

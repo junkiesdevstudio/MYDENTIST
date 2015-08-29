@@ -53,13 +53,14 @@ namespace MYDENTIST.Form.PopUpData
         public PopUpDataAppointment(string IdAppointment)
         {
             InitializeComponent();
+            
             isEdit = true;
             DataDokter();
 
             this.Title = "Ubah Data Appointment";
             btnSimpan.Content = "Update";
             IDAppoinment = IdAppointment;
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
+            
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             FetchEditData();
             koneksi.Dispose();
@@ -67,6 +68,9 @@ namespace MYDENTIST.Form.PopUpData
 
         void FetchEditData()
         {
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
+
             koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
             DataTable Datatable = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_appointment WHERE mydentist.tbl_appointment.id_appo = " + IDAppoinment, null);
             foreach (DataRow row in Datatable.Rows)
@@ -74,7 +78,7 @@ namespace MYDENTIST.Form.PopUpData
                 //MessageBox.Show(row["nama_karyawan"].ToString());
                 IDPasien = row["id_pasien"].ToString();
                 DateTime t = DateTime.Parse(row["jam_appo"].ToString());
-                txtJam.Text = string.Format("{0:hh:mm}", t);
+                txtJam.Text = string.Format("{0:HH:mm}", t);
                 status = row["status_appo"].ToString();
                 datePick.Text = row["tanggal_appo"].ToString();
                 txtNoRm.Text = row["norm_appo"].ToString();

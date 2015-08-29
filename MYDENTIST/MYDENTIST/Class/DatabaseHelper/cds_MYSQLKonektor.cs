@@ -47,7 +47,7 @@ namespace MYDENTIST.Class.DatabaseHelper
                 mysqlConnection = new MySqlConnection(base.koneksiString);
 
 
-                if (!base.OpenKoneksi(mysqlConnection, 1)) throw new Exception("Unable to connect");
+                if (!base.OpenKoneksi(mysqlConnection, 10)) throw new Exception("Unable to connect");
                 if (isTransaction) mysqlTransaction = mysqlConnection.BeginTransaction(this.isolationLevel);
                 mysqlCommand = mysqlConnection.CreateCommand();
                 mysqlCommand.Connection = mysqlConnection;

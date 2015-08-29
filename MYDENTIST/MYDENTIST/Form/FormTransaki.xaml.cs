@@ -34,7 +34,7 @@ namespace MYDENTIST.Form
 
         private decimal totalObat;
         private decimal totalTerapi;
-
+        private int tempStokEdit;
         public FormTransaki()
         {
             InitializeComponent();
@@ -165,28 +165,82 @@ namespace MYDENTIST.Form
 
         private void dgObat_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            int TotalObat  = 0;
+            //Cek Stock Obat
+            try{
+                koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
 
-            dgObat.UpdateLayout();
-            for (int x = 0; x < dgObat.Items.Count; x++)
-            {
+               // var rows = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(dgObat.SelectedIndex);
+                //DataObat v = (DataObat)dgObat.Items[rows.GetIndex()];
 
-                //var row = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(x);
+                DataObat v = ((DataObat)(dgObat.SelectedItem));
+                int select = dgObat.SelectedIndex;
 
-                //DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
-                DataGridCell cell = DataGridHelper.GetCell(dgObat, x, 5);
-                TextBlock tb = cell.Content as TextBlock;
-                ///Console.WriteLine(cell);
-                ///
-                //MessageBox.Show(cell.ToString());
+                CmbxData = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_obat WHERE mydentist.tbl_obat.id_obat =" + v.ID , null);
 
-                string value = tb.Text.Replace("Rp", "").Replace(".", "").Replace(",00", "");
-                TotalObat += int.Parse(value);
+                if (v.QTY > (int)CmbxData.Rows[0]["stok_obat"])
+                {
+                    myDataItems.Remove(v);
+                    dgObat.ItemsSource = null;
+                    myDataItems.Add(new DataObat { ID = (int)CmbxData.Rows[0]["id_obat"], QTY = tempStokEdit, NamaObat = CmbxData.Rows[0]["nama_obat"].ToString(), Biaya = (int)CmbxData.Rows[0]["hargajual_obat"] });
+                    dgObat.ItemsSource = myDataItems;
+                    dgObat.UpdateLayout();
+                    MessageBox.Show("Maaf, stock tidak mencukupi");
+
+                    int TotalObat = 0;
+
+                    dgObat.UpdateLayout();
+                    for (int x = 0; x < dgObat.Items.Count; x++)
+                    {
+
+                        //var row = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(x);
+
+                        //DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
+                        DataGridCell cell = DataGridHelper.GetCell(dgObat, x, 5);
+                        TextBlock tb = cell.Content as TextBlock;
+                        ///Console.WriteLine(cell);
+                        ///
+                        //MessageBox.Show(cell.ToString());
+
+                        string value = tb.Text.Replace("Rp", "").Replace(".", "").Replace(",00", "");
+                        TotalObat += int.Parse(value);
+
+                    }
+
+                    dgObat.UpdateLayout();
+                    tempStokEdit = 0;
+                    txtTotalObat.Text = TotalObat.ToString();
+
+                }else{
+
+                    int TotalObat  = 0;
+            
+                    dgObat.UpdateLayout();
+                    for (int x = 0; x < dgObat.Items.Count; x++)
+                    {
+
+                        //var row = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(x);
+
+                        //DataRowView v = (DataRowView)dgObat.Items[row.GetIndex()];
+                        DataGridCell cell = DataGridHelper.GetCell(dgObat, x, 5);
+                        TextBlock tb = cell.Content as TextBlock;
+                        ///Console.WriteLine(cell);
+                        ///
+                        //MessageBox.Show(cell.ToString());
+
+                        string value = tb.Text.Replace("Rp", "").Replace(".", "").Replace(",00", "");
+                        TotalObat += int.Parse(value);
+                
+                    }
+
+                    txtTotalObat.Text = TotalObat.ToString();
+                }
+
                 
             }
+            catch (Exception ex)
+            {
 
-
-            txtTotalObat.Text = TotalObat.ToString();
+            }
 
         }
 
@@ -595,27 +649,29 @@ namespace MYDENTIST.Form
         private void btn_tambah_Click(object sender, RoutedEventArgs e)
         {
 
-            if (txtKWT.Text != string.Empty && txtNamaPasien.Text != string.Empty && cmbNamaDokter.SelectedIndex != -1)
+            try
             {
-
-                if (dgTerapi.Items.Count > 0 || dgObat.Items.Count > 0)
+                if (txtKWT.Text != string.Empty && txtNamaPasien.Text != string.Empty && cmbNamaDokter.SelectedIndex != -1)
                 {
-                    string invoice_order = UnixTimeNow().ToString();
-                    string grandTotal = txtGrandTotal.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
-                    string totalObat = txtTotalObat.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
-                    string totalRekap = txtTotalTerapi.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
 
-                    //Terapi
-                    for (int x = 0; x < dgTerapi.Items.Count; x++)
+                    if (dgTerapi.Items.Count > 0 || dgObat.Items.Count > 0)
                     {
-
-                        var row = (DataGridRow)dgTerapi.ItemContainerGenerator.ContainerFromIndex(x);
-                        DataTerapi v = (DataTerapi)dgTerapi.Items[row.GetIndex()];
-
-
+                        string invoice_order = UnixTimeNow().ToString();
+                        string grandTotal = txtGrandTotal.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
+                        string totalObat = txtTotalObat.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
+                        string totalRekap = txtTotalTerapi.Text.Replace("Rp", "").Replace(".", "").Replace(",", "");
                         koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
-                        // ParameterData dalam bentuk Array (Menyesuakian Database)
-                        param = new ParameterData[] { new ParameterData("invoice_rekapterapi", invoice_order),
+                        //Terapi
+                        for (int x = 0; x < dgTerapi.Items.Count; x++)
+                        {
+
+                            var row = (DataGridRow)dgTerapi.ItemContainerGenerator.ContainerFromIndex(x);
+                            DataTerapi v = (DataTerapi)dgTerapi.Items[row.GetIndex()];
+
+
+                           
+                            // ParameterData dalam bentuk Array (Menyesuakian Database)
+                            param = new ParameterData[] { new ParameterData("invoice_rekapterapi", invoice_order),
                                           new ParameterData("tanggal_rekapterapi",  datePick.SelectedDate),
                                           new ParameterData("nokwt_rekapterapi",  txtKWT.Text),
                                           new ParameterData("namaterapi_rekapterapi", v.NamaTerapi),
@@ -627,27 +683,30 @@ namespace MYDENTIST.Form
                                           new ParameterData("total_rekapterapi", totalRekap),
                                           new ParameterData("grandtotal_rekapterapi", grandTotal)};
 
-                        koneksi.InsertRow(SettingHelper.database, "tbl_rekapterapi", true, param);
+                            koneksi.InsertRow(SettingHelper.database, "tbl_rekapterapi", true, param);
 
-                        // Penting ketika melakukan fungsi InsertRow, kalau tidak dicommit data gk akan masuk ke database
-                        koneksi.Commit(true);
+                            // Penting ketika melakukan fungsi InsertRow, kalau tidak dicommit data gk akan masuk ke database
+                            koneksi.Commit(true);
 
-                        // melaksanakan fungsi delegate
+                            // melaksanakan fungsi delegate
 
-                        koneksi.Dispose();
+                       
 
-                    }
-
-                    for (int x = 0; x < dgObat.Items.Count; x++)
-                    {
-
-                        var row = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(x);
-                        DataObat v = (DataObat)dgObat.Items[row.GetIndex()];
+                        }
 
 
-                        koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
-                        // ParameterData dalam bentuk Array (Menyesuakian Database)
-                        param = new ParameterData[] { new ParameterData("invoice_rekapobat", invoice_order),
+                       
+
+                        for (int x = 0; x < dgObat.Items.Count; x++)
+                        {
+
+                            var row = (DataGridRow)dgObat.ItemContainerGenerator.ContainerFromIndex(x);
+                            DataObat v = (DataObat)dgObat.Items[row.GetIndex()];
+
+
+                           
+                            // ParameterData dalam bentuk Array (Menyesuakian Database)
+                            param = new ParameterData[] { new ParameterData("invoice_rekapobat", invoice_order),
                                           new ParameterData("tanggal_rekapobat",  datePick.SelectedDate),
                                           new ParameterData("nokwt_rekapobat",  txtKWT.Text),
                                           new ParameterData("namapasien_rekapobat", txtNamaPasien.Text),
@@ -659,68 +718,87 @@ namespace MYDENTIST.Form
                                           new ParameterData("total_rekapobat", totalObat ),
                                           new ParameterData("grandtotal_rekapobat", grandTotal)};
 
-                        koneksi.InsertRow(SettingHelper.database, "tbl_rekapobat", true, param);
+                            koneksi.InsertRow(SettingHelper.database, "tbl_rekapobat", true, param);
 
-                        // Penting ketika melakukan fungsi InsertRow, kalau tidak dicommit data gk akan masuk ke database
-                        koneksi.Commit(true);
+                            // Penting ketika melakukan fungsi InsertRow, kalau tidak dicommit data gk akan masuk ke database
+                            koneksi.Commit(true);
 
+                          
+                            
+                            //pengurangan stok
+                          
+                            DataTable Datatable = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_obat WHERE mydentist.tbl_obat.id_obat =" + v.ID, null);
+                            
+                            int stokakhir = 0;
 
-                        //pengurangan stok
-                        DataTable Datatable = koneksi.GetDataTable("SELECT * FROM mydentist.tbl_obat WHERE mydentist.tbl_obat.id_obat =" + v.ID, null);
+                            foreach (DataRow rows in Datatable.Rows)
+                            {
+                                stokakhir = (int)rows["stok_obat"] - v.QTY;
+                                MessageBox.Show(stokakhir.ToString());
 
-                        int stokakhir = 0;
+                                try
+                                {
+                                    //koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+                                    ParameterData[] para = new ParameterData[] { new ParameterData("stok_obat", stokakhir) };
+                                    koneksi.UpdateRow(SettingHelper.database, "tbl_obat", "id_obat=" + v.ID, 1, para);
+                                    koneksi.Commit(true);
 
-                        foreach (DataRow rows in Datatable.Rows)
-                        {
-                            stokakhir = (int)rows["stok_obat"] - v.QTY;
+                                    
+                                }catch(Exception ex){
+                                    //MessageBox.Show(ex.Message);
+                                }
+                            }
+
+                            
+
+                           
                         }
 
-                        param = new ParameterData[] { new ParameterData("stok_obat", stokakhir) };
-                        koneksi.UpdateRow(SettingHelper.database, "tbl_obat", "id_obat=" + v.ID, 0, param);
-                        koneksi.Commit(true);
+                       
 
-                        koneksi.Dispose();
-
-                    }
-
-                    for (int i = 0; i < dgPerawat.Items.Count; i++)
-                    {
-                        DataGridRow rows = (DataGridRow)dgPerawat.ItemContainerGenerator.ContainerFromIndex(i);
-                        CheckBox checkBox = FindChild<CheckBox>(rows, "chkSelectAll");
-                        //checkBox.IsChecked = ((CheckBox)sender).IsChecked;
-
-                        if (checkBox != null && checkBox.IsChecked == true)
+                        for (int i = 0; i < dgPerawat.Items.Count; i++)
                         {
-                            DataRowView v = (DataRowView)dgPerawat.Items[rows.GetIndex()];
+                            DataGridRow rows = (DataGridRow)dgPerawat.ItemContainerGenerator.ContainerFromIndex(i);
+                            CheckBox checkBox = FindChild<CheckBox>(rows, "chkSelectAll");
+                            //checkBox.IsChecked = ((CheckBox)sender).IsChecked;
 
-                            koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
-                            // ParameterData dalam bentuk Array (Menyesuakian Database)
-                            param = new ParameterData[] { new ParameterData("nama_perawat", (string)v[1].ToString()),
+                            if (checkBox != null && checkBox.IsChecked == true)
+                            {
+                                DataRowView v = (DataRowView)dgPerawat.Items[rows.GetIndex()];
+
+                                //koneksi = new cds_MYSQLKonektor(new cds_KoneksiString(SettingHelper.host, SettingHelper.user, SettingHelper.pass, SettingHelper.port), true, System.Data.IsolationLevel.Serializable);
+                                // ParameterData dalam bentuk Array (Menyesuakian Database)
+                                param = new ParameterData[] { new ParameterData("nama_perawat", (string)v[1].ToString()),
                                           new ParameterData("id_perawat",  (string)v[0].ToString()),
                                           new ParameterData("tanggal_rekapperawat",  datePick.SelectedDate),
                                           new ParameterData("invoice_rekapperawat", invoice_order),
                                           new ParameterData("nokwt_rekapperawat", txtKWT.Text)};
 
-                            koneksi.InsertRow(SettingHelper.database, "tbl_rekapperawat", true, param);
+                                koneksi.InsertRow(SettingHelper.database, "tbl_rekapperawat", true, param);
 
-                            // Penting ketika melakukan fungsi InsertRow, kalau tidak dicommit data gk akan masuk ke database
-                            koneksi.Commit(true);
-                            koneksi.Dispose();
+                                // Penting ketika melakukan fungsi InsertRow, kalau tidak dicommit data gk akan masuk ke database
+                                koneksi.Commit(true);
+                               // koneksi.Dispose();
+                            }
                         }
+
+                        koneksi.Dispose();
+                        MessageBox.Show("Data transaki berhasil disimpan", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ClearAll();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mohon data field diisi !", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
-                    MessageBox.Show("Data transaki berhasil disimpan", "Informasi", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ClearAll();
                 }
                 else
                 {
                     MessageBox.Show("Mohon data field diisi !", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                
-            }
-            else
-            {
-                MessageBox.Show("Mohon data field diisi !", "Informasi", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }catch(Exception ex){
+                MessageBox.Show(ex.Message);
             }
 
         }
@@ -765,6 +843,14 @@ namespace MYDENTIST.Form
                 CheckBox checkBox = FindChild<CheckBox>(rows, "chkSelectAll");
                 checkBox.IsChecked = false;
             }
+        }
+
+        private void dgObat_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+                    DataGridCell cell = DataGridHelper.GetCell(dgObat, dgObat.SelectedIndex, 2);
+                    TextBlock tb = cell.Content as TextBlock;
+                    tempStokEdit = int.Parse(tb.Text);
+                    //MessageBox.Show(value);
         }
 
     }
